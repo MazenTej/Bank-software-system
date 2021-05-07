@@ -42,6 +42,18 @@ public class CreateValidatorTest {
     }
 
     @Test
+    void checking_account_is_valid() {
+        boolean actual = createValidator.validateCreate("create checking 12345678 0.6");
+        assertTrue(actual);
+    }
+
+    @Test
+    void savings_account_is_valid() {
+        boolean actual = createValidator.validateCreate("create savings 12345678 0.6");
+        assertTrue(actual);
+    }
+
+    @Test
     void seven_digits_id_is_invalid() {
         boolean actual = createValidator.validateCreate("create savings 1234567 0.6");
         assertFalse(actual);
@@ -80,6 +92,11 @@ public class CreateValidatorTest {
         assertFalse(actual);
     }
 
+    @Test
+    void apr_is_not_a_double_is_invalid() {
+        boolean actual = createValidator.validateCreate("create savings 12345678 0m5");
+        assertFalse(actual);
+    }
 
     @Test
     void get_second_word_in_command_with_no_extra_spaces() {
@@ -101,12 +118,24 @@ public class CreateValidatorTest {
 
     }
 
-
     @Test
     void string_with_characteres_other_than_numbers_returns_false() {
-        boolean actual = createValidator.checkNumbers("create checking 1234ma56 0.6");
+        boolean actual = createValidator.checkIdHasOnlyNumbers("create checking 1234ma56 0.6");
         assertFalse(actual);
     }
+
+    @Test
+    void get_fourth_word_in_command_with_no_extra_spaces() {
+        String actual = createValidator.getFourthWord("create checking 12345678 0.6");
+        assertEquals(actual, "0.6");
+    }
+
+    @Test
+    void apr_is_not_a_double_returns_false() {
+        boolean actual = createValidator.checkDouble("create checking 12345678 nv0.6");
+        assertFalse(actual);
+    }
+
 
 }
 

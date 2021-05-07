@@ -9,11 +9,15 @@ public class CreateValidator {
         String accountType = getSecondWord(command);
         if (accountType.equalsIgnoreCase("checking") || accountType.equalsIgnoreCase("savings") || accountType.equalsIgnoreCase("cd")) {
             if (checkIdLength(command)) {
-                if (checkNumbers(command)) {
+                if (checkIdHasOnlyNumbers(command)) {
                     if (bank.accountExistsWithId("12345678")) {
                         return false;
                     } else {
-                        return true;
+                        if (checkDouble(command)) {
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
 
 
@@ -49,7 +53,7 @@ public class CreateValidator {
     }
 
 
-    public boolean checkNumbers(String command) {
+    public boolean checkIdHasOnlyNumbers(String command) {
         String id = getThirdWord(command);
         if (id.matches(".*[^0-9]+.*")) {
             return false;
@@ -58,4 +62,26 @@ public class CreateValidator {
         }
 
     }
+
+    public String getFourthWord(String command) {
+        String[] sp = command.split(" ");
+        return sp[3];
+    }
+
+    public boolean checkDouble(String command) {
+        boolean result;
+
+        try {
+            String str = getFourthWord(command);
+            Double.parseDouble(str);
+            result = true;
+
+        } catch (Exception e) {
+            result = false;
+        }
+        return result;
+
+    }
+
+
 }
