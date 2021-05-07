@@ -51,6 +51,12 @@ public class CreateValidatorTest {
         assertFalse(actual);
     }
 
+    @Test
+    void negative_id_is_invalid() {
+        boolean actual = createValidator.validateCreate("create savings -123456789 0.6");
+        assertFalse(actual);
+    }
+
 
     @Test
     void get_second_word_in_command_with_no_extra_spaces() {
@@ -70,6 +76,12 @@ public class CreateValidatorTest {
         boolean actual = createValidator.checkIdLength("create checking 123457 0.6");
         assertFalse(actual);
 
+    }
+
+    @Test
+    void test_id_is_negative_returns_false() {
+        boolean actual = createValidator.checkNegativeId("create checking -12345678 0.6");
+        assertFalse(actual);
     }
 
 }

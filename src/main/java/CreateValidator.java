@@ -1,4 +1,23 @@
 public class CreateValidator {
+    public boolean validateCreate(String command) {
+        String accountType = getSecondWord(command);
+        if (accountType.equalsIgnoreCase("checking") || accountType.equalsIgnoreCase("savings") || accountType.equalsIgnoreCase("cd")) {
+            if (checkIdLength(command)) {
+                if (checkNegativeId(command)) {
+                    return true;
+
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+    }
+
     public String getSecondWord(String command) {
         int start = command.indexOf(" ") + 1;
         int end = command.indexOf(" ", start + 1);
@@ -18,17 +37,15 @@ public class CreateValidator {
         }
     }
 
-    public boolean validateCreate(String command) {
-        String accountType = getSecondWord(command);
-        if (accountType.equalsIgnoreCase("checking") || accountType.equalsIgnoreCase("savings") || accountType.equalsIgnoreCase("cd")) {
-            if (checkIdLength(command)) {
-                return true;
-            } else {
-                return false;
-            }
 
-        } else {
+    public boolean checkNegativeId(String command) {
+        Integer id = Integer.parseInt(getThirdWord(command));
+        if (id < 0) {
             return false;
+        } else {
+            return true;
         }
+
+
     }
 }
