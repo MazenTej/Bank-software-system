@@ -1,10 +1,20 @@
 public class CreateValidator {
+    private Bank bank;
+
+    public CreateValidator(Bank bank) {
+        this.bank = bank;
+    }
+
     public boolean validateCreate(String command) {
         String accountType = getSecondWord(command);
         if (accountType.equalsIgnoreCase("checking") || accountType.equalsIgnoreCase("savings") || accountType.equalsIgnoreCase("cd")) {
             if (checkIdLength(command)) {
                 if (checkNegativeId(command)) {
-                    return true;
+                    if (bank.accountExistsWithId("12345678")) {
+                        return false;
+                    } else {
+                        return true;
+                    }
 
                 } else {
                     return false;

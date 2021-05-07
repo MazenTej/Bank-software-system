@@ -32,4 +32,12 @@ public class Bank {
     public void addCdAccount(String id, double apr, double amount_cd) {
         accounts.put(id, new Cd(id, apr, amount_cd));
     }
+
+    public boolean accountExistsWithId(String id) {
+        if (accounts.get(id) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

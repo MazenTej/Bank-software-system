@@ -5,11 +5,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateValidatorTest {
     CreateValidator createValidator;
+    Bank bank;
 
 
     @BeforeEach
     void setUp() {
-        createValidator = new CreateValidator();
+        bank = new Bank();
+        createValidator = new CreateValidator(bank);
     }
 
     @Test
@@ -55,6 +57,21 @@ public class CreateValidatorTest {
     void negative_id_is_invalid() {
         boolean actual = createValidator.validateCreate("create savings -123456789 0.6");
         assertFalse(actual);
+    }
+
+    @Test
+    void command_with_no_id_is_invalid() {
+        boolean actual = createValidator.validateCreate("create savings 0.6");
+        assertFalse(actual);
+
+    }
+
+    @Test
+    void duplicate_id_is_invalid() {
+        bank.addCheckingAccount("12345678", 0.6);
+        boolean actual = createValidator.validateCreate("create savings 12345678 0.6 ");
+        assertFalse(actual);
+
     }
 
 

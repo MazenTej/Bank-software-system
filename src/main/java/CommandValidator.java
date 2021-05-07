@@ -1,5 +1,6 @@
 public class CommandValidator {
-    CreateValidator createValidator = new CreateValidator();
+    Bank bank = new Bank();
+    CreateValidator createValidator = new CreateValidator(bank);
 
 
     public boolean validate(String command) {
