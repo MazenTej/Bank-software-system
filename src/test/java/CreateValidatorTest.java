@@ -34,7 +34,7 @@ public class CreateValidatorTest {
     }
 
     @Test
-    void account_type_is_case_insenstive() {
+    void account_type_is_case_incensitive() {
         boolean actual = createValidator.validateCreate("create saVings 12345678 0.6");
         assertTrue(actual);
 
@@ -74,6 +74,12 @@ public class CreateValidatorTest {
 
     }
 
+    @Test
+    void id_in_form_of_float_in_invalid() {
+        boolean actual = createValidator.validateCreate("create savings 123456.5 0.6");
+        assertFalse(actual);
+    }
+
 
     @Test
     void get_second_word_in_command_with_no_extra_spaces() {
@@ -98,6 +104,12 @@ public class CreateValidatorTest {
     @Test
     void test_id_is_negative_returns_false() {
         boolean actual = createValidator.checkNegativeId("create checking -12345678 0.6");
+        assertFalse(actual);
+    }
+
+    @Test
+    void test_id_with_dot_in_it_returns_false() {
+        boolean actual = createValidator.checkFloat("create checking 123456.8 0.6");
         assertFalse(actual);
     }
 

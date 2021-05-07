@@ -10,10 +10,14 @@ public class CreateValidator {
         if (accountType.equalsIgnoreCase("checking") || accountType.equalsIgnoreCase("savings") || accountType.equalsIgnoreCase("cd")) {
             if (checkIdLength(command)) {
                 if (checkNegativeId(command)) {
-                    if (bank.accountExistsWithId("12345678")) {
-                        return false;
+                    if (checkFloat(command)) {
+                        if (bank.accountExistsWithId("12345678")) {
+                            return false;
+                        } else {
+                            return true;
+                        }
                     } else {
-                        return true;
+                        return false;
                     }
 
                 } else {
@@ -49,13 +53,22 @@ public class CreateValidator {
 
 
     public boolean checkNegativeId(String command) {
-        Integer id = Integer.parseInt(getThirdWord(command));
-        if (id < 0) {
+        String id = getThirdWord(command);
+        if (id.startsWith("-")) {
             return false;
         } else {
             return true;
         }
 
 
+    }
+
+    public boolean checkFloat(String command) {
+        String id = getThirdWord(command);
+        if (id.contains(".")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
