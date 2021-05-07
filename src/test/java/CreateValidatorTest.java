@@ -101,15 +101,10 @@ public class CreateValidatorTest {
 
     }
 
-    @Test
-    void test_id_is_negative_returns_false() {
-        boolean actual = createValidator.checkNegativeId("create checking -12345678 0.6");
-        assertFalse(actual);
-    }
 
     @Test
-    void test_id_with_dot_in_it_returns_false() {
-        boolean actual = createValidator.checkFloat("create checking 123456.8 0.6");
+    void string_with_characteres_other_than_numbers_returns_false() {
+        boolean actual = createValidator.checkNumbers("create checking 1234ma56 0.6");
         assertFalse(actual);
     }
 

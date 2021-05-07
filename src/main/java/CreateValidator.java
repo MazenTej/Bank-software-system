@@ -9,16 +9,13 @@ public class CreateValidator {
         String accountType = getSecondWord(command);
         if (accountType.equalsIgnoreCase("checking") || accountType.equalsIgnoreCase("savings") || accountType.equalsIgnoreCase("cd")) {
             if (checkIdLength(command)) {
-                if (checkNegativeId(command)) {
-                    if (checkFloat(command)) {
-                        if (bank.accountExistsWithId("12345678")) {
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    } else {
+                if (checkNumbers(command)) {
+                    if (bank.accountExistsWithId("12345678")) {
                         return false;
+                    } else {
+                        return true;
                     }
+
 
                 } else {
                     return false;
@@ -52,23 +49,13 @@ public class CreateValidator {
     }
 
 
-    public boolean checkNegativeId(String command) {
+    public boolean checkNumbers(String command) {
         String id = getThirdWord(command);
-        if (id.startsWith("-")) {
+        if (id.matches(".*[^0-9]+.*")) {
             return false;
         } else {
             return true;
         }
 
-
-    }
-
-    public boolean checkFloat(String command) {
-        String id = getThirdWord(command);
-        if (id.contains(".")) {
-            return false;
-        } else {
-            return true;
-        }
     }
 }
