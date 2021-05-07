@@ -7,7 +7,6 @@ public class CreateValidatorTest {
     CreateValidator createValidator;
     Bank bank;
 
-
     @BeforeEach
     void setUp() {
         bank = new Bank();
@@ -93,10 +92,41 @@ public class CreateValidatorTest {
     }
 
     @Test
+    void non_duplicate_id_with_eight_digits_is_valid() {
+        boolean actual = createValidator.validateCreate("create savings 12345678 0.6");
+        assertTrue(actual);
+    }
+
+    @Test
     void apr_is_not_a_double_is_invalid() {
         boolean actual = createValidator.validateCreate("create savings 12345678 0m5");
         assertFalse(actual);
     }
+
+    @Test
+    void apr_bigger_than_ten_is_invalid() {
+        boolean actual = createValidator.validateCreate("create savings 12345678 12");
+        assertFalse(actual);
+    }
+
+    @Test
+    void apr_less_than_zero_is_invalid() {
+        boolean actual = createValidator.validateCreate("create savings 12345678 -0.4");
+        assertFalse(actual);
+    }
+
+    @Test
+    void apr_is_ten_is_valid() {
+        boolean actual = createValidator.validateCreate("create savings 12345678 10");
+        assertTrue(actual);
+    }
+
+    @Test
+    void apr_is_zero_is_valid() {
+        boolean actual = createValidator.validateCreate("create savings 12345678 0");
+        assertTrue(actual);
+    }
+
 
     @Test
     void get_second_word_in_command_with_no_extra_spaces() {
@@ -119,7 +149,7 @@ public class CreateValidatorTest {
     }
 
     @Test
-    void string_with_characteres_other_than_numbers_returns_false() {
+    void string_with_characters_other_than_numbers_returns_false() {
         boolean actual = createValidator.checkIdHasOnlyNumbers("create checking 1234ma56 0.6");
         assertFalse(actual);
     }
@@ -132,7 +162,13 @@ public class CreateValidatorTest {
 
     @Test
     void apr_is_not_a_double_returns_false() {
-        boolean actual = createValidator.checkDouble("create checking 12345678 nv0.6");
+        boolean actual = createValidator.checkAprDouble("create checking 12345678 nv0.6");
+        assertFalse(actual);
+    }
+
+    @Test
+    void double_apr_bigger_than_ten_returns_false() {
+        boolean actual = createValidator.checkAprRange("create checking 12345678 12");
         assertFalse(actual);
     }
 

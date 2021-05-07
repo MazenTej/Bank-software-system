@@ -13,8 +13,12 @@ public class CreateValidator {
                     if (bank.accountExistsWithId("12345678")) {
                         return false;
                     } else {
-                        if (checkDouble(command)) {
-                            return true;
+                        if (checkAprDouble(command)) {
+                            if (checkAprRange(command)) {
+                                return true;
+                            } else {
+                                return false;
+                            }
                         } else {
                             return false;
                         }
@@ -68,7 +72,7 @@ public class CreateValidator {
         return sp[3];
     }
 
-    public boolean checkDouble(String command) {
+    public boolean checkAprDouble(String command) {
         boolean result;
 
         try {
@@ -84,4 +88,13 @@ public class CreateValidator {
     }
 
 
+    public boolean checkAprRange(String command) {
+        String str = getFourthWord(command);
+        double apr = Double.parseDouble(str);
+        if (apr < 0 || apr > 10) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
