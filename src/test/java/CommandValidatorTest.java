@@ -20,7 +20,7 @@ public class CommandValidatorTest {
 
     @Test
     void check_for_extra_spaces_in_beginning_returns_false() {
-        boolean actual = commandValidator.checkForExtraSpaces("    create checking ");
+        boolean actual = commandValidator.checkForExtraSpaces("    create checking 12345678 0.6 ");
         assertFalse(actual);
     }
 
@@ -39,7 +39,7 @@ public class CommandValidatorTest {
 
     @Test
     void command_with_extra_spaces_in_the_middle_is_invalid() {
-        boolean actual = commandValidator.validate("create     command  is invalid");
+        boolean actual = commandValidator.validate("create     checking   12345678  0.6");
         assertFalse(actual);
 
 
@@ -47,7 +47,7 @@ public class CommandValidatorTest {
 
     @Test
     void check_for_extra_spaces_in_the_end_returns_true() {
-        boolean actual = commandValidator.checkForExtraSpaces("create checking 12345678     ");
+        boolean actual = commandValidator.checkForExtraSpaces("create checking 12345678 0.6    ");
         assertTrue(actual);
     }
 
@@ -59,14 +59,14 @@ public class CommandValidatorTest {
 
 
     @Test
-    void get_first_word() {
+    void get_first_word_in_command_with_no_extra_spaces() {
         String actual = commandValidator.getFirstWord("create checking account");
         assertEquals(actual, "create");
     }
 
     @Test
-    void command_is_case_insensitive() {
-        boolean actual = commandValidator.validate("CreaTE checKing 12345678 0.6");
+    void command_first_word_is_case_insensitive() {
+        boolean actual = commandValidator.validate("Create checking 12345678 0.6");
         assertTrue(actual);
     }
 
