@@ -5,7 +5,11 @@ public class CommandValidator {
         if (!checkForExtraSpaces(command)) {
             return false;
         } else {
-            return true;
+            if (getFirstWord(command).equalsIgnoreCase("create")) {
+                return CreateValidator.validateCreate(command);
+            } else {
+                return false;
+            }
         }
     }
 

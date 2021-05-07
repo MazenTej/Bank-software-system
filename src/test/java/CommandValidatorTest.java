@@ -32,7 +32,7 @@ public class CommandValidatorTest {
 
     @Test
     void check_for_extra_spaces_in_the_middle_returns_false() {
-        boolean actual = commandValidator.validate(("create    command is invalid"));
+        boolean actual = commandValidator.validate(("create    command    is invalid"));
         assertFalse(actual);
     }
 
@@ -62,5 +62,17 @@ public class CommandValidatorTest {
     void get_first_word() {
         String actual = commandValidator.getFirstWord("create checking account");
         assertEquals(actual, "create");
+    }
+
+    @Test
+    void command_is_case_insensitive() {
+        boolean actual = commandValidator.validate("CreaTE checKing 12345678 0.6");
+        assertTrue(actual);
+    }
+
+    @Test
+    void create_misspelled_is_invalid() {
+        boolean actual = commandValidator.validate("creatte checking 12345678 0.6");
+        assertFalse(actual);
     }
 }
