@@ -1,4 +1,5 @@
 public class CommandValidator {
+    CreateValidator createValidator = new CreateValidator();
 
 
     public boolean validate(String command) {
@@ -6,7 +7,7 @@ public class CommandValidator {
             return false;
         } else {
             if (getFirstWord(command).equalsIgnoreCase("create")) {
-                return CreateValidator.validateCreate(command);
+                return createValidator.validateCreate(command);
             } else {
                 return false;
             }
