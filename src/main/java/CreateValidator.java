@@ -6,36 +6,53 @@ public class CreateValidator {
     }
 
     public boolean validateCreate(String command) {
+
         String accountType = getSecondWord(command);
-        if (accountType.equalsIgnoreCase("checking") || accountType.equalsIgnoreCase("savings") || accountType.equalsIgnoreCase("cd")) {
-            if (checkIdLength(command)) {
-                if (checkIdHasOnlyNumbers(command)) {
-                    if (bank.accountExistsWithId("12345678")) {
-                        return false;
-                    } else {
-                        if (checkAprDouble(command)) {
-                            if (checkAprRange(command)) {
-                                return true;
-                            } else {
-                                return false;
-                            }
+        if (accountType.equalsIgnoreCase("checking") || accountType.equalsIgnoreCase("savings")) {
+            if (checkCommandLengthForSavingsAndChecking(command)) {
+                return validateCommand(command);
+
+            } else {
+                return false;
+            }
+        } else if (accountType.equalsIgnoreCase("cd")) {
+            if (checkCommandLengthForCd(command)) {
+                return validateCommand(command);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+
+    }
+
+    public boolean validateCommand(String command) {
+        if (checkIdLength(command)) {
+            if (checkIdHasOnlyNumbers(command)) {
+                if (bank.accountExistsWithId("12345678")) {
+                    return false;
+                } else {
+                    if (checkAprDouble(command)) {
+                        if (checkAprRange(command)) {
+                            return true;
+
                         } else {
                             return false;
                         }
+                    } else {
+                        return false;
                     }
-
-
-                } else {
-                    return false;
                 }
             } else {
                 return false;
             }
-
         } else {
             return false;
         }
     }
+
 
     public String getSecondWord(String command) {
         int start = command.indexOf(" ") + 1;
@@ -47,6 +64,7 @@ public class CreateValidator {
         String[] sp = command.split(" ");
         return sp[2];
     }
+
 
     public boolean checkIdLength(String command) {
         if (getThirdWord(command).length() != 8) {
@@ -96,5 +114,23 @@ public class CreateValidator {
         } else {
             return true;
         }
+    }
+
+    public boolean checkCommandLengthForSavingsAndChecking(String command) {
+        boolean result = true;
+        String[] words = command.split("\\s+");
+        if (words.length != 4) {
+            result = false;
+        }
+        return result;
+    }
+
+    public boolean checkCommandLengthForCd(String command) {
+        boolean result = true;
+        String[] words = command.split("\\s+");
+        if (words.length != 5) {
+            result = false;
+        }
+        return result;
     }
 }

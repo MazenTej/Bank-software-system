@@ -127,6 +127,31 @@ public class CreateValidatorTest {
         assertTrue(actual);
     }
 
+    @Test
+    void apr_in_range_is_valid() {
+        boolean actual = createValidator.validateCreate("create savings 12345678 5.6");
+        assertTrue(actual);
+    }
+
+    @Test
+    void no_apr_is_invalid() {
+        boolean actual = createValidator.validateCreate("create savings 1234678");
+        assertFalse(actual);
+    }
+
+
+    @Test
+    void no_amount_input_with_cd_account_is_invalid() {
+        boolean actual = createValidator.validateCreate("create cd 12345678 0.6");
+        assertFalse(actual);
+    }
+
+    @Test
+    void amount_input_with_savings_or_checking_is_invalid() {
+        boolean actual = createValidator.validateCreate("create savings 12345678 0.6 100");
+        assertFalse(actual);
+    }
+
 
     @Test
     void get_second_word_in_command_with_no_extra_spaces() {
@@ -170,6 +195,19 @@ public class CreateValidatorTest {
     void double_apr_bigger_than_ten_returns_false() {
         boolean actual = createValidator.checkAprRange("create checking 12345678 12");
         assertFalse(actual);
+    }
+
+    @Test
+    void account_type_different_than_cd_returns_false_for_number_of_elements_different_than_four() {
+        boolean actual = createValidator.checkCommandLengthForSavingsAndChecking("create checking 12345678 0.6 100");
+        assertFalse(actual);
+    }
+
+    @Test
+    void account_type_cd_returns_false_for_number_of_elements_different_than_five() {
+        boolean actual = createValidator.checkCommandLengthForCd("create cd 12345678 0.6");
+        assertFalse(actual);
+
     }
 
 
