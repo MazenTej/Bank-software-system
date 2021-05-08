@@ -41,9 +41,10 @@ public class CreateValidator {
     }
 
     public boolean validateCommand(String command) {
+        String id = getThirdWord(command);
         if (checkIdLength(command)) {
             if (checkIdHasOnlyNumbers(command)) {
-                if (bank.accountExistsWithId("12345678")) {
+                if (bank.accountExistsWithId(id)) {
                     return false;
                 } else {
                     if (checkAprDouble(command)) {

@@ -40,4 +40,10 @@ public class Bank {
             return false;
         }
     }
+
+    public boolean isValidDepositInAccount(String id, String deposit_amount) {
+        Account account = accounts.get(id);
+        boolean isValidDeposit = account.isValidDepositWith(deposit_amount);
+        return isValidDeposit;
+    }
 }

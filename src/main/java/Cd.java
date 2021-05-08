@@ -5,5 +5,10 @@ public class Cd extends Account {
 
     }
 
+    @Override
+    public boolean isValidDepositWith(String deposit_amount) {
+        return false;
+    }
+
 
 }

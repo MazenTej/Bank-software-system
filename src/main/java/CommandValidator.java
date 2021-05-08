@@ -1,6 +1,7 @@
 public class CommandValidator {
     Bank bank = new Bank();
     CreateValidator createValidator = new CreateValidator(bank);
+    DepositValidator depositValidator = new DepositValidator(bank);
 
 
     public boolean validate(String command) {
@@ -9,6 +10,8 @@ public class CommandValidator {
         } else {
             if (getFirstWord(command).equalsIgnoreCase("create")) {
                 return createValidator.validateCreate(command);
+            } else if (getFirstWord(command).equalsIgnoreCase("deposit")) {
+                return depositValidator.validateDeposit(command);
             } else {
                 return false;
             }
