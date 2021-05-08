@@ -17,7 +17,19 @@ public class CreateValidator {
             }
         } else if (accountType.equalsIgnoreCase("cd")) {
             if (checkCommandLengthForCd(command)) {
-                return validateCommand(command);
+                if (validateCommand(command)) {
+                    if (checkCdAmountDouble(command)) {
+                        if (checkCdAmountInRange(command)) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
@@ -132,5 +144,38 @@ public class CreateValidator {
             result = false;
         }
         return result;
+    }
+
+    public String getFifthWord(String command) {
+        String[] sp = command.split(" ");
+        return sp[4];
+
+    }
+
+
+    public boolean checkCdAmountDouble(String command) {
+        boolean result;
+
+        try {
+            String str = getFifthWord(command);
+            Double.parseDouble(str);
+            result = true;
+
+        } catch (Exception e) {
+            result = false;
+        }
+        return result;
+    }
+
+
+    public boolean checkCdAmountInRange(String command) {
+        String str = getFifthWord(command);
+        double apr = Double.parseDouble(str);
+        if (apr < 1000 || apr > 10000) {
+            return false;
+        } else {
+            return true;
+        }
+
     }
 }
