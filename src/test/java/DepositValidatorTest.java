@@ -56,9 +56,16 @@ public class DepositValidatorTest {
     }
 
     @Test
-    void deposit_into_savings_account_amount_more_than_maximum_is_invalid() {
+    void deposit_into_savings_account_amount_in_dollars_more_than_maximum_is_invalid() {
         bank.addSavingsAccount("12345678", 0.6);
         boolean actual = depositValidator.validateDeposit("deposit 12345678 5000");
+        assertFalse(actual);
+    }
+
+    @Test
+    void deposit_into_savings_account_amount_in_dollars_and_cents_more_than_maximum_is_invalid() {
+        bank.addSavingsAccount("12345678", 0.6);
+        boolean actual = depositValidator.validateDeposit("deposit 12345678 5000.12");
         assertFalse(actual);
     }
 
@@ -84,16 +91,31 @@ public class DepositValidatorTest {
     }
 
     @Test
-    void deposit_into_savings_account_amount_in_range_is_valid() {
+    void deposit_into_savings_account_amount_in_dollars_range_is_valid() {
         bank.addSavingsAccount("12345678", 0.6);
         boolean actual = depositValidator.validateDeposit("deposit 12345678 1000");
         assertTrue(actual);
     }
 
     @Test
-    void deposit_into_checking_account_amount_more_than_maximum_is_invalid() {
+    void deposit_into_savings_account_amount_in_dollars_and_cents_range_is_valid() {
+        bank.addSavingsAccount("12345678", 0.6);
+        boolean actual = depositValidator.validateDeposit("deposit 12345678 1000.12");
+        assertTrue(actual);
+    }
+
+
+    @Test
+    void deposit_into_checking_account_amount_in_dollars_more_than_maximum_is_invalid() {
         bank.addCheckingAccount("12345678", 0.6);
         boolean actual = depositValidator.validateDeposit("deposit 12345678 20000");
+        assertFalse(actual);
+    }
+
+    @Test
+    void deposit_into_checking_account_amount_in_dollars_and_cents_more_than_maximum_is_invalid() {
+        bank.addCheckingAccount("12345678", 0.6);
+        boolean actual = depositValidator.validateDeposit("deposit 12345678 20000.22");
         assertFalse(actual);
     }
 
@@ -119,9 +141,16 @@ public class DepositValidatorTest {
     }
 
     @Test
-    void deposit_into_checking_account_amount_in_range_is_valid() {
+    void deposit_into_checking_account_amount_in_dollars_in_range_is_valid() {
         bank.addCheckingAccount("12345678", 0.6);
         boolean actual = depositValidator.validateDeposit("deposit 12345678 500");
+        assertTrue(actual);
+    }
+
+    @Test
+    void deposit_into_checking_account_amount_in_dollars_and_cents_in_range_is_valid() {
+        bank.addCheckingAccount("12345678", 0.6);
+        boolean actual = depositValidator.validateDeposit("deposit 12345678 500.12");
         assertTrue(actual);
     }
 

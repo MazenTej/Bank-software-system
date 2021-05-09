@@ -24,11 +24,6 @@ public class CommandValidatorTest {
         assertTrue(actual);
     }
 
-    @Test
-    void check_for_extra_spaces_in_beginning_returns_false() {
-        boolean actual = commandValidator.checkForExtraSpaces("    create checking 12345678 0.6 ");
-        assertFalse(actual);
-    }
 
     @Test
     void command_with_spaces_in_the_beginning_is_invalid() {
@@ -118,6 +113,12 @@ public class CommandValidatorTest {
     void get_first_word_in_deposit_command_with_no_extra_spaces() {
         String actual = commandValidator.getFirstWord("deposit 12345678 1000");
         assertEquals(actual, "deposit");
+    }
+
+    @Test
+    void check_for_extra_spaces_in_beginning_returns_false() {
+        boolean actual = commandValidator.checkForExtraSpaces("    create checking 12345678 0.6 ");
+        assertFalse(actual);
     }
 
 

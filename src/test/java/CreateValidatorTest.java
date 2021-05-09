@@ -189,13 +189,19 @@ public class CreateValidatorTest {
     }
 
     @Test
-    void cd_amount_in_range_is_valid() {
+    void cd_amount_in_range_in_dollars_is_valid() {
         boolean actual = createValidator.validateCreate("create cd 12345678 0.6 5000");
         assertTrue(actual);
     }
 
     @Test
-    void cd_amount_less_than_0_is_invalid() {
+    void cd_amount_in_range_in_dollars_ad_cents_is_valid() {
+        boolean actual = createValidator.validateCreate("create cd 12345678 0.6 5000.12");
+        assertTrue(actual);
+    }
+
+    @Test
+    void cd_amount_less_than_zero_is_invalid() {
         boolean actual = createValidator.validateCreate("create cd 12345678 0.6 -1000");
         assertFalse(actual);
     }
