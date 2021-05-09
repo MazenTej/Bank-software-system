@@ -1,6 +1,7 @@
 public class DepositValidator {
     private Bank bank;
 
+
     public DepositValidator(Bank bank) {
         this.bank = bank;
     }
@@ -71,14 +72,14 @@ public class DepositValidator {
 
 
     public boolean checkValidDeposit(String command) {
+        boolean result = false;
         String id = getSecondWord(command);
         String deposit_amount = getThirdWord(command);
         boolean isValid = bank.isValidDepositInAccount(id, deposit_amount);
         if (isValid) {
-            return true;
-        } else {
-            return false;
+            result = true;
         }
+        return result;
 
     }
 }

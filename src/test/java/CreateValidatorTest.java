@@ -110,7 +110,7 @@ public class CreateValidatorTest {
     }
 
     @Test
-    void apr_bigger_than_ten_is_invalid() {
+    void apr_bigger_than_maximum_is_invalid() {
         boolean actual = createValidator.validateCreate("create savings 12345678 12");
         assertFalse(actual);
     }
@@ -122,7 +122,7 @@ public class CreateValidatorTest {
     }
 
     @Test
-    void apr_is_ten_is_valid() {
+    void apr_is_maximum_is_valid() {
         boolean actual = createValidator.validateCreate("create savings 12345678 10");
         assertTrue(actual);
     }
@@ -165,25 +165,25 @@ public class CreateValidatorTest {
     }
 
     @Test
-    void cd_amount_bigger_than_ten_thousands_is_invalid() {
+    void cd_amount_bigger_than_maximum_is_invalid() {
         boolean actual = createValidator.validateCreate("create cd 12345678 0.6 1000000");
         assertFalse(actual);
     }
 
     @Test
-    void cd_amount_less_than_one_thousand_is_invalid() {
+    void cd_amount_less_than_minimum_is_invalid() {
         boolean actual = createValidator.validateCreate("create cd 12345678 0.6 100");
         assertFalse(actual);
     }
 
     @Test
-    void cd_amount_is_ten_thousands_is_valid() {
+    void cd_amount_is_maximum_is_valid() {
         boolean actual = createValidator.validateCreate("create cd 12345678 0.6 10000");
         assertTrue(actual);
     }
 
     @Test
-    void cd_amount_in_range_is_one_thousand_is_valid() {
+    void cd_amount_is_minimum_is_valid() {
         boolean actual = createValidator.validateCreate("create cd 12345678 0.6 1000");
         assertTrue(actual);
     }

@@ -1,7 +1,12 @@
 public class CommandValidator {
-    Bank bank = new Bank();
-    CreateValidator createValidator = new CreateValidator(bank);
-    DepositValidator depositValidator = new DepositValidator(bank);
+    private CreateValidator createValidator;
+    private DepositValidator depositValidator;
+
+    CommandValidator(CreateValidator createValidator, DepositValidator depositValidator) {
+        this.createValidator = createValidator;
+        this.depositValidator = depositValidator;
+
+    }
 
 
     public boolean validate(String command) {
@@ -11,6 +16,7 @@ public class CommandValidator {
             if (getFirstWord(command).equalsIgnoreCase("create")) {
                 return createValidator.validateCreate(command);
             } else if (getFirstWord(command).equalsIgnoreCase("deposit")) {
+
                 return depositValidator.validateDeposit(command);
             } else {
                 return false;
@@ -23,12 +29,12 @@ public class CommandValidator {
     }
 
     protected boolean checkForExtraSpaces(String command) {
+        boolean result = true;
         String newString = command.replaceAll("\\s++$", "");
         if (newString.startsWith(" ") || newString.contains("  ")) {
-            return false;
-        } else {
-            return true;
+            result = false;
         }
+        return result;
 
 
     }
