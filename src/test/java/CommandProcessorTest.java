@@ -17,13 +17,13 @@ public class CommandProcessorTest {
 
     }
 
-
     @Test
-    void create_checking_account_is_successful() {
+    void create_one_checking_account_is_successful() {
         commandProcessor.createChecking("create checking 12345678 1.0");
         Account actual = bank.getAccounts().get("12345678");
         assertTrue(bank.getAccounts().containsKey("12345678"));
         assertEquals(actual.getApr(), 1.0);
+        assertEquals(actual.getAmount(), 0);
         assertTrue(actual instanceof Checking);
     }
 
@@ -40,6 +40,25 @@ public class CommandProcessorTest {
         assertTrue(bank.getAccounts().containsKey("12121212"));
         assertEquals(actual1.getApr(), 1.0);
         assertEquals(actual2.getApr(), 2.0);
+        assertEquals(actual3.getApr(), 3.6);
+        assertEquals(actual1.getAmount(), 0);
+        assertEquals(actual2.getAmount(), 0);
+        assertEquals(actual3.getAmount(), 0);
+
+        assertTrue(actual1 instanceof Checking);
+        assertTrue(actual2 instanceof Checking);
+        assertTrue(actual3 instanceof Checking);
+
+    }
+
+    @Test
+    void create_one_savings_account() {
+        commandProcessor.createSavings("create savings 12345678 1.0");
+        Account actual = bank.getAccounts().get("12345678");
+        assertTrue(bank.getAccounts().containsKey("12345678"));
+        assertEquals(actual.getId(), "12345678");
+        assertEquals(actual.getApr(), 1.0);
+        assertEquals(actual.getAmount(), 0);
 
     }
 }

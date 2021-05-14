@@ -17,6 +17,16 @@ public class CommandProcessor {
 
     }
 
+    public void createSavings(String command) {
+        String accountType = getSecondWord(command);
+        String id = getThirdWord(command);
+        double apr = Double.parseDouble(getFourthWord(command));
+        if (accountType.equalsIgnoreCase("savings")) {
+            bank.addSavingsAccount(id, apr);
+        }
+
+    }
+
     public String getThirdWord(String command) {
         String[] sp = command.split(" ");
         return sp[2];
