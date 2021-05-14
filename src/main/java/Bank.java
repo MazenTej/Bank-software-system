@@ -32,4 +32,18 @@ public class Bank {
     public void addCdAccount(String id, double apr, double amount_cd) {
         accounts.put(id, new Cd(id, apr, amount_cd));
     }
+
+    public boolean accountExistsWithId(String id) {
+        if (accounts.get(id) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isValidDepositInAccount(String id, String deposit_amount) {
+        Account account = accounts.get(id);
+        boolean isValidDeposit = account.isValidDepositWith(deposit_amount);
+        return isValidDeposit;
+    }
 }

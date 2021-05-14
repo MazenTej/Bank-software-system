@@ -4,5 +4,15 @@ public class Checking extends Account {
         super(id, apr);
     }
 
+    @Override
+    public boolean isValidDepositWith(String deposit_amount) {
+        double amount = Double.parseDouble(deposit_amount);
+        if (amount < 0 || amount > 1000) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
 }

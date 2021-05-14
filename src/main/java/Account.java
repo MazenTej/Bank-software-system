@@ -50,4 +50,5 @@ public abstract class Account {
     }
 
 
+    public abstract boolean isValidDepositWith(String deposit_amount);
 }
