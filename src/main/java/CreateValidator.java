@@ -147,7 +147,7 @@ public class CreateValidator {
         return result;
     }
 
-    public String getFifthWord(String command) {
+    protected String getFifthWord(String command) {
         String[] sp = command.split(" ");
         return sp[4];
 
