@@ -129,4 +129,27 @@ public class CommandProcessorTest {
         assertTrue(actual3 instanceof Cd);
 
     }
+
+    @Test
+    void create_cd_checking_and_savings_account_is_successful() {
+        commandProcessor.createAccount("create checking 12345678 1.0");
+        commandProcessor.createAccount("create savings 12121212 2.0");
+        commandProcessor.createAccount("create cd 10101010 3.2 2000");
+        Account actual1 = bank.getAccounts().get("12345678");
+        Account actual2 = bank.getAccounts().get("12121212");
+        Account actual3 = bank.getAccounts().get("10101010");
+        assertTrue(bank.getAccounts().containsKey("12345678"));
+        assertTrue(bank.getAccounts().containsKey("10101010"));
+        assertTrue(bank.getAccounts().containsKey("12121212"));
+        assertEquals(actual1.getApr(), 1.0);
+        assertEquals(actual2.getApr(), 2.0);
+        assertEquals(actual3.getApr(), 3.2);
+        assertEquals(actual1.getAmount(), 0);
+        assertEquals(actual2.getAmount(), 0);
+        assertEquals(actual3.getAmount(), 2000);
+        assertTrue(actual1 instanceof Checking);
+        assertTrue(actual2 instanceof Savings);
+        assertTrue(actual3 instanceof Cd);
+    }
 }
+
