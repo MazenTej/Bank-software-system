@@ -1,10 +1,11 @@
 public class CommandProcessor {
-    private Bank bank;
     private CreateProcessor createProcessor;
+    private DepositProcessor depositProcessor;
 
 
-    public CommandProcessor(CreateProcessor createProcessor) {
+    public CommandProcessor(CreateProcessor createProcessor, DepositProcessor depositProcessor) {
         this.createProcessor = createProcessor;
+        this.depositProcessor = depositProcessor;
     }
 
 
@@ -12,6 +13,8 @@ public class CommandProcessor {
         String firstWord = getFirstWord(command);
         if (firstWord.equalsIgnoreCase("create")) {
             createProcessor.createAccount(command);
+        } else if (firstWord.equalsIgnoreCase("deposit")) {
+            depositProcessor.depositAmount(command);
         }
 
     }

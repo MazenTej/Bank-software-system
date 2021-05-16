@@ -8,19 +8,19 @@ public class CommandProcessorTest {
     Bank bank;
     CommandProcessor commandProcessor;
     CreateProcessor createProcessor;
+    DepositProcessor depositProcessor;
 
 
     @BeforeEach
     void setUp() {
         bank = new Bank();
         createProcessor = new CreateProcessor(bank);
-        commandProcessor = new CommandProcessor(createProcessor);
-
+        commandProcessor = new CommandProcessor(createProcessor, depositProcessor);
 
     }
 
     @Test
-    void process() {
+    void process_create() {
         commandProcessor.process("create checking 12345678 1.0");
         Account actual = bank.getAccounts().get("12345678");
         assertTrue(bank.getAccounts().containsKey("12345678"));
