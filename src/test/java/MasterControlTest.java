@@ -51,8 +51,22 @@ public class MasterControlTest {
 
     }
 
+    @Test
+    void two_typo_commands_both_invlaid() {
+        input.add("creat checking 12345678 1.0");
+        input.add("depositt 123456789 100");
+
+        List<String> actual = masterControl.start(input);
+
+        assertEquals(2, actual.size());
+        assertEquals("creat checking 12345678 1.0", actual.get(0));
+        assertEquals("depositt 123456789 100", actual.get(1));
+    }
+
     private void assertSingleCommand(String command, List<String> actual) {
         assertEquals(1, actual.size());
         assertEquals(command, actual.get(0));
     }
+
+
 }
