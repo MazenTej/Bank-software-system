@@ -3,7 +3,7 @@ public class CommandProcessor {
     private DepositProcessor depositProcessor;
 
 
-    public CommandProcessor(CreateProcessor createProcessor, DepositProcessor depositProcessor) {
+    CommandProcessor(CreateProcessor createProcessor, DepositProcessor depositProcessor) {
         this.createProcessor = createProcessor;
         this.depositProcessor = depositProcessor;
     }
