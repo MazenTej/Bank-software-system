@@ -1,4 +1,4 @@
-package bamking;
+package banking;
 
 public class Cd extends Account {
 

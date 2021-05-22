@@ -1,4 +1,4 @@
-package bamking;
+package banking;
 
 public class CreateProcessor {
     private Bank bank;

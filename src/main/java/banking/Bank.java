@@ -1,4 +1,4 @@
-package bamking;
+package banking;
 
 import java.util.HashMap;
 import java.util.Map;
