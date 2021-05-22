@@ -1,3 +1,5 @@
+package bamking;
+
 public class CommandProcessor {
     private CreateProcessor createProcessor;
     private DepositProcessor depositProcessor;

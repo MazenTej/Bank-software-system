@@ -1,3 +1,5 @@
+package bamking;
+
 import java.util.List;
 
 public class MasterControl {

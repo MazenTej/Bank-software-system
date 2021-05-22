@@ -1,3 +1,5 @@
+package bamking;
+
 public class CommandValidator {
     private CreateValidator createValidator;
     private DepositValidator depositValidator;

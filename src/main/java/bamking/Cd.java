@@ -1,3 +1,5 @@
+package bamking;
+
 public class Cd extends Account {
 
     public Cd(String id, double apr, double amount_cd) {

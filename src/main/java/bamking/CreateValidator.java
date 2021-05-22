@@ -1,3 +1,5 @@
+package bamking;
+
 public class CreateValidator {
     private Bank bank;
 

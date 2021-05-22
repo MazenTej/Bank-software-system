@@ -1,3 +1,5 @@
+package bamking;
+
 public abstract class Account {
     protected String id;
     protected double apr;

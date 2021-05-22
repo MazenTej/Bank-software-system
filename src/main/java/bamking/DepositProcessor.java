@@ -1,3 +1,5 @@
+package bamking;
+
 public class DepositProcessor {
     private Bank bank;
 

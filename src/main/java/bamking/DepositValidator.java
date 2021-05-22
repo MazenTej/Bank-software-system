@@ -1,3 +1,5 @@
+package bamking;
+
 public class DepositValidator {
     private Bank bank;
 

@@ -1,3 +1,5 @@
+package bamking;
+
 public class Savings extends Account {
 
     public Savings(String id, double apr) {
