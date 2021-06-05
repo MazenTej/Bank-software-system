@@ -26,6 +26,8 @@ public class BankTest {
 
     public static final double DOLLARS_AMOUNT_SET_2 = 300;
     public static final double DOLLARS_AND_CENTS_AMOUNT_SET_2 = 300.123;
+    public static final double DOLLARS_AMOUNT_TRANSFERRED_1 = 400;
+    public static final double DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1 = 400.645;
 
 
     Bank bank;
@@ -340,6 +342,58 @@ public class BankTest {
     void cd_has_amount_equal_to_amount_declared_in_command() {
         bank.addCdAccount(ID, APR, AMOUNT_CD);
         assertEquals(AMOUNT_CD, cd.getAmount());
+    }
+
+    @Test
+    void transfer_from_checking_account_amount_in_dollars_less_than_balance_to_empty_savings_account() {
+        bank.addCheckingAccount(ID, APR);
+        Checking actual1 = (Checking) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addSavingsAccount(ID2, APR);
+        Savings actual2 = (Savings) bank.getAccounts().get(ID2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_1);
+        assertEquals(DOLLARS_AMOUNT_TRANSFERRED_1, actual2.getAmount());
+        assertEquals(DOLLARS_AMOUNT_SET - DOLLARS_AMOUNT_TRANSFERRED_1, actual1.getAmount());
+
+    }
+
+    @Test
+    void transfer_from_savings_account_amount_in_dollars_less_than_balance_to_empty_checking_account() {
+        bank.addSavingsAccount(ID, APR);
+        Savings actual1 = (Savings) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addCheckingAccount(ID2, APR);
+        Checking actual2 = (Checking) bank.getAccounts().get(ID2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_1);
+        assertEquals(DOLLARS_AMOUNT_TRANSFERRED_1, actual2.getAmount());
+        assertEquals(DOLLARS_AMOUNT_SET - DOLLARS_AMOUNT_TRANSFERRED_1, actual1.getAmount());
+
+    }
+
+    @Test
+    void transfer_from_checking_account_amount_in_dollars_and_cents_less_than_balance_to_empty_savings_account() {
+        bank.addCheckingAccount(ID, APR);
+        Checking actual1 = (Checking) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addSavingsAccount(ID2, APR);
+        Savings actual2 = (Savings) bank.getAccounts().get(ID2);
+        bank.transferAmount(ID, ID2, DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1);
+        assertEquals(DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1, actual2.getAmount());
+        assertEquals(DOLLARS_AMOUNT_SET - DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1, actual1.getAmount());
+
+    }
+
+    @Test
+    void transfer_from_checking_account_amount_in_dollars_and_cents_and_cents_less_than_balance_to_empty_savings_account() {
+        bank.addSavingsAccount(ID, APR);
+        Savings actual1 = (Savings) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addCheckingAccount(ID2, APR);
+        Checking actual2 = (Checking) bank.getAccounts().get(ID2);
+        bank.transferAmount(ID, ID2, DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1);
+        assertEquals(DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1, actual2.getAmount());
+        assertEquals(DOLLARS_AMOUNT_SET - DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1, actual1.getAmount());
+
     }
 
 

@@ -15,6 +15,7 @@ public class MasterControlTest {
     MasterControl masterControl;
     CreateValidator createValidator;
     DepositValidator depositValidator;
+    WithdrawValidator withdrawValidator;
     CreateProcessor createProcessor;
     DepositProcessor depositProcessor;
 
@@ -27,11 +28,13 @@ public class MasterControlTest {
         Bank bank = new Bank();
         createValidator = new CreateValidator(bank);
         depositValidator = new DepositValidator(bank);
+        withdrawValidator = new WithdrawValidator(bank);
+
         createProcessor = new CreateProcessor(bank);
         depositProcessor = new DepositProcessor(bank);
 
 
-        masterControl = new MasterControl(bank, new CommandValidator(createValidator, depositValidator), new CommandProcessor(createProcessor, depositProcessor), new CommandStorage());
+        masterControl = new MasterControl(bank, new CommandValidator(createValidator, depositValidator, withdrawValidator), new CommandProcessor(createProcessor, depositProcessor), new CommandStorage());
 
     }
 

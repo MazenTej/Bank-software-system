@@ -1,15 +1,17 @@
 package banking;
 
 public class CreateProcessor {
+    public Parsing parsing;
     private Bank bank;
 
     public CreateProcessor(Bank bank) {
         this.bank = bank;
+        parsing = new Parsing();
     }
 
 
     public void createAccount(String command) {
-        String accountType = getSecondWord(command);
+        String accountType = parsing.getSecondWord(command);
         if (accountType.equalsIgnoreCase("checking")) {
             createChecking(command);
         } else if (accountType.equalsIgnoreCase("savings")) {
@@ -22,49 +24,28 @@ public class CreateProcessor {
     }
 
     public void createChecking(String command) {
-        String id = getThirdWord(command);
-        double apr = Double.parseDouble(getFourthWord(command));
+        String id = parsing.getThirdWord(command);
+        double apr = Double.parseDouble(parsing.getFourthWord(command));
         bank.addCheckingAccount(id, apr);
 
     }
 
     public void createSavings(String command) {
-        String id = getThirdWord(command);
-        double apr = Double.parseDouble(getFourthWord(command));
+        String id = parsing.getThirdWord(command);
+        double apr = Double.parseDouble(parsing.getFourthWord(command));
         bank.addSavingsAccount(id, apr);
 
 
     }
 
     public void createCd(String command) {
-        String id = getThirdWord(command);
-        double apr = Double.parseDouble(getFourthWord(command));
-        double amount = Double.parseDouble(getFifthWord(command));
+        String id = parsing.getThirdWord(command);
+        double apr = Double.parseDouble(parsing.getFourthWord(command));
+        double amount = Double.parseDouble(parsing.getFifthWord(command));
         bank.addCdAccount(id, apr, amount);
 
 
     }
 
 
-    public String getThirdWord(String command) {
-        String[] sp = command.split(" ");
-        return sp[2];
-    }
-
-    public String getSecondWord(String command) {
-        int start = command.indexOf(" ") + 1;
-        int end = command.indexOf(" ", start + 1);
-        return command.substring(start, end);
-    }
-
-    public String getFourthWord(String command) {
-        String[] sp = command.split(" ");
-        return sp[3];
-    }
-
-    protected String getFifthWord(String command) {
-        String[] sp = command.split(" ");
-        return sp[4];
-
-    }
 }

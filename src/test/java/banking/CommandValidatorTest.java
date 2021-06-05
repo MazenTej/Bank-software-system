@@ -3,12 +3,14 @@ package banking;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CommandValidatorTest {
     CommandValidator commandValidator;
     CreateValidator createValidator;
     DepositValidator depositValidator;
+    WithdrawValidator withdrawValidator;
     Bank bank;
 
 
@@ -17,7 +19,8 @@ public class CommandValidatorTest {
         bank = new Bank();
         createValidator = new CreateValidator(bank);
         depositValidator = new DepositValidator(bank);
-        commandValidator = new CommandValidator(createValidator, depositValidator);
+        withdrawValidator = new WithdrawValidator(bank);
+        commandValidator = new CommandValidator(createValidator, depositValidator, withdrawValidator);
     }
 
     @Test
@@ -39,9 +42,16 @@ public class CommandValidatorTest {
         assertFalse(actual);
     }
 
+
     @Test
     void deposit_misspelled_is_invalid() {
         boolean actual = commandValidator.validate("depositt 12345678 2500");
+        assertFalse(actual);
+    }
+
+    @Test
+    void withdraw_misspelled_is_invalid() {
+        boolean actual = commandValidator.validate("withdraww 12345678 300");
         assertFalse(actual);
     }
 
@@ -54,6 +64,12 @@ public class CommandValidatorTest {
     @Test
     void missing_deposit_is_invalid() {
         boolean actual = commandValidator.validate("12345678 1000");
+        assertFalse(actual);
+    }
+
+    @Test
+    void missing_withdraw_is_invalid() {
+        boolean actual = commandValidator.validate("12345678 100");
         assertFalse(actual);
     }
 
@@ -104,18 +120,6 @@ public class CommandValidatorTest {
         assertTrue(actual);
     }
 
-
-    @Test
-    void get_first_word_in_create_command_with_no_extra_spaces() {
-        String actual = commandValidator.getFirstWord("create checking account");
-        assertEquals(actual, "create");
-    }
-
-    @Test
-    void get_first_word_in_deposit_command_with_no_extra_spaces() {
-        String actual = commandValidator.getFirstWord("deposit 12345678 1000");
-        assertEquals(actual, "deposit");
-    }
 
     @Test
     void check_for_extra_spaces_in_beginning_returns_false() {

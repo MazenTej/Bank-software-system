@@ -48,4 +48,10 @@ public class Bank {
         boolean isValidDeposit = account.isValidDepositWith(deposit_amount);
         return isValidDeposit;
     }
+
+    public void transferAmount(String id, String id2, double amountTransferred) {
+        accounts.get(id).withdraw(amountTransferred);
+        accounts.get(id2).deposit(amountTransferred);
+
+    }
 }

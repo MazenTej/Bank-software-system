@@ -1,11 +1,13 @@
 package banking;
 
 public class DepositValidator {
+    public Parsing parsing;
     private Bank bank;
 
 
     public DepositValidator(Bank bank) {
         this.bank = bank;
+        parsing = new Parsing();
     }
 
 
@@ -28,19 +30,13 @@ public class DepositValidator {
 
     public boolean checkDepositId(String command) {
         boolean result = false;
-        String id = getSecondWord(command);
+        String id = parsing.getSecondWord(command);
         if (bank.accountExistsWithId(id)) {
             result = true;
         }
         return result;
     }
 
-
-    public String getSecondWord(String command) {
-        int start = command.indexOf(" ") + 1;
-        int end = command.indexOf(" ", start + 1);
-        return command.substring(start, end);
-    }
 
     public boolean checkDepositCommandLength(String command) {
         boolean result = true;
@@ -55,7 +51,7 @@ public class DepositValidator {
     public boolean checkDepositAmountDouble(String command) {
         boolean result;
         try {
-            String str = getThirdWord(command);
+            String str = parsing.getThirdWord(command);
             Double.parseDouble(str);
             result = true;
 
@@ -67,16 +63,10 @@ public class DepositValidator {
     }
 
 
-    public String getThirdWord(String command) {
-        String[] sp = command.split(" ");
-        return sp[2];
-    }
-
-
     public boolean checkValidDeposit(String command) {
         boolean result = false;
-        String id = getSecondWord(command);
-        String deposit_amount = getThirdWord(command);
+        String id = parsing.getSecondWord(command);
+        String deposit_amount = parsing.getThirdWord(command);
         boolean isValid = bank.isValidDepositInAccount(id, deposit_amount);
         if (isValid) {
             result = true;

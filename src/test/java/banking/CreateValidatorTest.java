@@ -3,7 +3,8 @@ package banking;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateValidatorTest {
     CreateValidator createValidator;
@@ -210,19 +211,6 @@ public class CreateValidatorTest {
 
 
     @Test
-    void get_second_word_in_command_with_no_extra_spaces() {
-        String actual = createValidator.getSecondWord("create checking 12345678 0.6");
-        assertEquals("checking", actual);
-
-    }
-
-    @Test
-    void get_third_word_in_command_with_no_extra_spaces() {
-        String actual = createValidator.getThirdWord("create checking 12345678 0.6");
-        assertEquals("12345678", actual);
-    }
-
-    @Test
     void test_id_length_returns_false_if_different_than_eight() {
         boolean actual = createValidator.checkIdLength("create checking 123457 0.6");
         assertFalse(actual);
@@ -235,11 +223,6 @@ public class CreateValidatorTest {
         assertFalse(actual);
     }
 
-    @Test
-    void get_fourth_word_in_command_with_no_extra_spaces() {
-        String actual = createValidator.getFourthWord("create checking 12345678 0.6");
-        assertEquals(actual, "0.6");
-    }
 
     @Test
     void apr_is_not_a_double_returns_false() {
@@ -266,11 +249,6 @@ public class CreateValidatorTest {
 
     }
 
-    @Test
-    void get_fifth_word_in_command_with_no_extra_spaces() {
-        String actual = createValidator.getFifthWord("create cd 12345678 0.6 1000");
-        assertEquals("1000", actual);
-    }
 
     @Test
     void cd_amount_is_not_a_double_returns_false() {
