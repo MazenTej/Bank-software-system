@@ -50,8 +50,16 @@ public class Bank {
     }
 
     public void transferAmount(String id, String id2, double amountTransferred) {
-        accounts.get(id).withdraw(amountTransferred);
-        accounts.get(id2).deposit(amountTransferred);
+        Account account1 = accounts.get(id);
+        Account account2 = accounts.get(id2);
+        if (account1.getAmount() >= amountTransferred) {
+            account1.withdraw(amountTransferred);
+            account2.deposit(amountTransferred);
+        } else {
+            account2.deposit(account1.getAmount());
+            account1.setAmount(0);
+
+        }
 
     }
 }
