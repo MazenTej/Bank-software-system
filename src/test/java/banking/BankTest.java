@@ -712,5 +712,131 @@ public class BankTest {
 
     }
 
+    @Test
+    void transfer_twice_from_savings_account_total_amounts_less_than_balance_to_checking_accounts_with_balance() {
+        bank.addSavingsAccount(ID, APR);
+        Savings actual1 = (Savings) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addCheckingAccount(ID2, APR);
+        Checking actual2 = (Checking) bank.getAccounts().get(ID2);
+        actual2.setAmount(DOLLARS_AND_CENTS_AMOUNT_SET_2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_1);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_1);
+        assertEquals(DOLLARS_AND_CENTS_AMOUNT_SET_2 + DOLLARS_AMOUNT_TRANSFERRED_1 + DOLLARS_AMOUNT_TRANSFERRED_1, actual2.getAmount());
+        assertEquals(DOLLARS_AMOUNT_SET - (2 * DOLLARS_AMOUNT_TRANSFERRED_1), actual1.getAmount());
+
+    }
+
+    @Test
+    void transfer_twice_from_checking_account_total_amounts_more_than_balance_to_empty_savings_account() {
+        bank.addCheckingAccount(ID, APR);
+        Checking actual1 = (Checking) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addSavingsAccount(ID2, APR);
+        Savings actual2 = (Savings) bank.getAccounts().get(ID2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_1);
+        assertEquals(DOLLARS_AMOUNT_SET, actual2.getAmount());
+        assertEquals(AMOUNT, actual1.getAmount());
+    }
+
+    @Test
+    void transfer_twice_from_savings_account_total_amounts_more_than_balance_to_empty_checking_account() {
+        bank.addSavingsAccount(ID, APR);
+        Savings actual1 = (Savings) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addCheckingAccount(ID2, APR);
+        Checking actual2 = (Checking) bank.getAccounts().get(ID2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_1);
+        assertEquals(DOLLARS_AMOUNT_SET, actual2.getAmount());
+        assertEquals(AMOUNT, actual1.getAmount());
+    }
+
+    @Test
+    void transfer_twice_from_checking_account_total_amounts_more_than_balance_to_savings_accounts_with_balance() {
+        bank.addCheckingAccount(ID, APR);
+        Checking actual1 = (Checking) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addSavingsAccount(ID2, APR);
+        Savings actual2 = (Savings) bank.getAccounts().get(ID2);
+        actual2.setAmount(DOLLARS_AND_CENTS_AMOUNT_SET_2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_1);
+        assertEquals(DOLLARS_AMOUNT_SET + DOLLARS_AND_CENTS_AMOUNT_SET_2, actual2.getAmount());
+        assertEquals(AMOUNT, actual1.getAmount());
+
+    }
+
+    @Test
+    void transfer_twice_from_savings_account_total_amounts_more_than_balance_to_checking_accounts_with_balance() {
+        bank.addSavingsAccount(ID, APR);
+        Savings actual1 = (Savings) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addCheckingAccount(ID2, APR);
+        Checking actual2 = (Checking) bank.getAccounts().get(ID2);
+        actual2.setAmount(DOLLARS_AND_CENTS_AMOUNT_SET_2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_1);
+        assertEquals(DOLLARS_AMOUNT_SET + DOLLARS_AND_CENTS_AMOUNT_SET_2, actual2.getAmount());
+        assertEquals(AMOUNT, actual1.getAmount());
+
+    }
+
+    @Test
+    void transfer_from_checking_to_savings_then_from_saving_to_checking_amounts_less_than_balance() {
+        bank.addCheckingAccount(ID, APR);
+        Checking actual1 = (Checking) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addSavingsAccount(ID2, APR);
+        Savings actual2 = (Savings) bank.getAccounts().get(ID2);
+        actual2.setAmount(DOLLARS_AND_CENTS_AMOUNT_SET_2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_1);
+        bank.transferAmount(ID2, ID, DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1);
+        assertEquals(DOLLARS_AMOUNT_SET - DOLLARS_AMOUNT_TRANSFERRED_1 + DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1, actual1.getAmount());
+        assertEquals(DOLLARS_AND_CENTS_AMOUNT_SET_2 + DOLLARS_AMOUNT_TRANSFERRED_1 - DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1, actual2.getAmount());
+    }
+
+    @Test
+    void transfer_from_savings_to_checking_then_from_saving_to_checking_amounts_less_than_balance() {
+        bank.addSavingsAccount(ID, APR);
+        Savings actual1 = (Savings) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addCheckingAccount(ID2, APR);
+        Checking actual2 = (Checking) bank.getAccounts().get(ID2);
+        actual2.setAmount(DOLLARS_AND_CENTS_AMOUNT_SET_2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_1);
+        bank.transferAmount(ID2, ID, DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1);
+        assertEquals(DOLLARS_AMOUNT_SET - DOLLARS_AMOUNT_TRANSFERRED_1 + DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1, actual1.getAmount());
+        assertEquals(DOLLARS_AND_CENTS_AMOUNT_SET_2 + DOLLARS_AMOUNT_TRANSFERRED_1 - DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_1, actual2.getAmount());
+    }
+
+    @Test
+    void transfer_from_checking_to_savings_amount_less_than_balance_then_from_saving_to_checking_amount_more_than_balance() {
+        bank.addCheckingAccount(ID, APR);
+        Checking actual1 = (Checking) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addSavingsAccount(ID2, APR);
+        Savings actual2 = (Savings) bank.getAccounts().get(ID2);
+        actual2.setAmount(DOLLARS_AND_CENTS_AMOUNT_SET_2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_1);
+        bank.transferAmount(ID2, ID, DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_2);
+        assertEquals(DOLLARS_AMOUNT_SET - DOLLARS_AMOUNT_TRANSFERRED_1 + (DOLLARS_AND_CENTS_AMOUNT_SET_2 + DOLLARS_AMOUNT_TRANSFERRED_1), actual1.getAmount());
+        assertEquals(AMOUNT, actual2.getAmount());
+    }
+
+    @Test
+    void transfer_from_savings_to_checking_amount_less_than_balance_then_from_checking_to_savings_amount_more_than_balance() {
+        bank.addSavingsAccount(ID, APR);
+        Savings actual1 = (Savings) bank.getAccounts().get(ID);
+        actual1.setAmount(DOLLARS_AMOUNT_SET);
+        bank.addCheckingAccount(ID2, APR);
+        Checking actual2 = (Checking) bank.getAccounts().get(ID2);
+        actual2.setAmount(DOLLARS_AND_CENTS_AMOUNT_SET_2);
+        bank.transferAmount(ID, ID2, DOLLARS_AMOUNT_TRANSFERRED_1);
+        bank.transferAmount(ID2, ID, DOLLARS_AND_CENTS_AMOUNT_TRANSFERRED_2);
+        assertEquals(DOLLARS_AMOUNT_SET - DOLLARS_AMOUNT_TRANSFERRED_1 + (DOLLARS_AND_CENTS_AMOUNT_SET_2 + DOLLARS_AMOUNT_TRANSFERRED_1), actual1.getAmount());
+        assertEquals(AMOUNT, actual2.getAmount());
+    }
 
 }
