@@ -53,4 +53,15 @@ public abstract class Account {
 
 
     public abstract boolean isValidDepositWith(String deposit_amount);
+
+    public abstract void passTime(int i);
+
+    public void calculateApr() {
+        double mult = (apr / 100) / 12;
+        double amount = getAmount();
+        setAmount(amount + (amount * mult));
+
+    }
+
+    public abstract boolean isValidWithdraw(String withdraw_amount);
 }

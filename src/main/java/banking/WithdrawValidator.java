@@ -12,11 +12,14 @@ public class WithdrawValidator {
 
 
     public boolean validateWithdraw(String command) {
+
         boolean result = false;
         if (checkWithdrawCommandLength(command)) {
             if (checkWithdrawId(command)) {
                 if (checkWithdrawAmountDouble(command)) {
-                    result = true;
+                    if (checkValidWithdraw(command)) {
+                        result = true;
+                    }
                 }
 
             }
@@ -57,6 +60,17 @@ public class WithdrawValidator {
         }
         return result;
 
+    }
+
+    public boolean checkValidWithdraw(String command) {
+        boolean result = false;
+        String id = parsing.getSecondWord(command);
+        String withdraw_amount = parsing.getThirdWord(command);
+        boolean isValid = bank.isValidWithdrawFromAccount(id, withdraw_amount);
+        if (isValid) {
+            result = true;
+        }
+        return result;
     }
 }
 

@@ -1,6 +1,7 @@
 package banking;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class Bank {
@@ -61,5 +62,39 @@ public class Bank {
 
         }
 
+    }
+
+    public Account retrieveAccount(String id) {
+        Account account = accounts.get(id);
+        return account;
+
+    }
+
+
+    public void passTime(int i) {
+        for (int j = 1; j <= i; j++) {
+            Iterator<String> it = accounts.keySet().iterator();
+            while (it.hasNext()) {
+                String key = it.next();
+                Account account = retrieveAccount(key);
+                if (account.getAmount() == 0) {
+                    it.remove();
+                } else if (account.getAmount() < 100) {
+                    withdrawAmount(key, 25);
+                }
+                account.passTime(i);
+
+
+            }
+        }
+
+
+    }
+
+
+    public boolean isValidWithdrawFromAccount(String id, String withdraw_amount) {
+        Account account = accounts.get(id);
+        boolean isValidWithdraw = account.isValidWithdraw(withdraw_amount);
+        return isValidWithdraw;
     }
 }

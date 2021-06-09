@@ -280,6 +280,16 @@ public class AccountTest {
 
     }
 
+    @Test
+    void calculate_apr_returns_amount_after_apr_calculation() {
+        bank.addCheckingAccount(ID, APR);
+        Account account = bank.retrieveAccount(ID);
+        account.setAmount(5000);
+        double apr = account.getApr();
+        account.calculateApr();
+        assertEquals(5002.5, account.getAmount());
+    }
+
 
 }
 

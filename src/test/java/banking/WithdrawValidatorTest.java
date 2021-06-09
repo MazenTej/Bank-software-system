@@ -57,5 +57,84 @@ public class WithdrawValidatorTest {
         assertFalse(actual);
     }
 
+    @Test
+    void withdraw_from_checking_account_amount_in_dollars_more_than_maximum_is_invalid() {
+        bank.addCheckingAccount("12345678", 0.6);
+        Account account = bank.retrieveAccount("12345678");
+        account.setAmount(1000);
+        boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 500");
+        assertFalse(actual);
+
+    }
+
+    @Test
+    void withdraw_from_checking_account_amount_in_dollars_and_cents_more_than_maximum_is_invalid() {
+        bank.addCheckingAccount("12345678", 0.6);
+        Account account = bank.retrieveAccount("12345678");
+        account.setAmount(1000.11);
+        boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 500.12");
+        assertFalse(actual);
+    }
+
+    @Test
+    void withdraw_from_checking_account_negative_amount_in_dollars_is_invalid() {
+        bank.addCheckingAccount("12345678", 0.6);
+        Account account = bank.retrieveAccount("12345678");
+        account.setAmount(1000);
+        boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 -500");
+        assertFalse(actual);
+
+    }
+
+    @Test
+    void withdraw_from_checking_account_negative_amount_in_dollars_and_cents_is_invalid() {
+        bank.addCheckingAccount("12345678", 0.6);
+        Account account = bank.retrieveAccount("12345678");
+        account.setAmount(1000.11);
+        boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 -500.12");
+        assertFalse(actual);
+
+    }
+
+    @Test
+    void withdraw_from_checking_account_zero_amount_is_valid() {
+        bank.addCheckingAccount("12345678", 0.6);
+        Account account = bank.retrieveAccount("12345678");
+        account.setAmount(1000.11);
+        boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 0");
+        assertTrue(actual);
+
+    }
+
+    @Test
+    void withdraw_from_checking_account_equals_to_maximum_amount_is_valid() {
+        bank.addCheckingAccount("12345678", 0.6);
+        Account account = bank.retrieveAccount("12345678");
+        account.setAmount(1000.11);
+        boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 400");
+        assertTrue(actual);
+
+    }
+
+    @Test
+    void withdraw_from_checking_account_amount_in_dollars_in_range_is_valid() {
+        bank.addCheckingAccount("12345678", 0.6);
+        Account account = bank.retrieveAccount("12345678");
+        account.setAmount(1000.11);
+        boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 300");
+        assertTrue(actual);
+
+    }
+
+    @Test
+    void withdraw_from_checking_account_amount_in_dollars_and_cents_in_range_is_valid() {
+        bank.addCheckingAccount("12345678", 0.6);
+        Account account = bank.retrieveAccount("12345678");
+        account.setAmount(1000.11);
+        boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 300.15");
+        assertTrue(actual);
+
+    }
+
 
 }
