@@ -67,7 +67,7 @@ public class CommandValidatorTest {
 
     @Test
     void pass_misspelled_is_invalid() {
-        boolean actual = commandValidator.validate("Passs 1");
+        boolean actual = commandValidator.validate("passs 1");
         assertFalse(actual);
     }
 
@@ -96,6 +96,12 @@ public class CommandValidatorTest {
     }
 
     @Test
+    void missing_pass_is_invalid() {
+        boolean actual = commandValidator.validate("1");
+        assertFalse(actual);
+    }
+
+    @Test
     void command_with_extra_spaces_in_the_middle_is_invalid() {
         boolean actual = commandValidator.validate("create     checking   12345678  0.6");
         assertFalse(actual);
@@ -117,6 +123,12 @@ public class CommandValidatorTest {
     void command_deposit_is_case_insensitive() {
         bank.addCheckingAccount("12345678", 0.6);
         boolean actual = commandValidator.validate("Deposit 12345678 1000");
+        assertTrue(actual);
+    }
+
+    @Test
+    void command_pass_is_case_insensitive() {
+        boolean actual = commandValidator.validate("Pass 1");
         assertTrue(actual);
     }
 

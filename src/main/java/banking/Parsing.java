@@ -3,7 +3,11 @@ package banking;
 public class Parsing {
 
     public String getFirstWord(String command) {
-        return command.substring(0, command.indexOf(' '));
+        if (command.contains(" ")) {
+            return command.substring(0, command.indexOf(' '));
+        } else {
+            return command;
+        }
     }
 
     public String getSecondWord(String command) {
