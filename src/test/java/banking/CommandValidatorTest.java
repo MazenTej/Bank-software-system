@@ -66,6 +66,12 @@ public class CommandValidatorTest {
     }
 
     @Test
+    void pass_misspelled_is_invalid() {
+        boolean actual = commandValidator.validate("Passs 1");
+        assertFalse(actual);
+    }
+
+    @Test
     void missing_create_is_invalid() {
         boolean actual = commandValidator.validate("checking 12345678 0.6");
         assertFalse(actual);
