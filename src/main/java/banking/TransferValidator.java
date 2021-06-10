@@ -15,10 +15,12 @@ public class TransferValidator {
         if (checkTransferCommandLength(command)) {
             if (checkTransferFromIdExists(command)) {
                 if (checkTransferToIdExists(command)) {
-                    if (checkTransferAmountDouble(command)) {
-                        if (bank.isValidWithdrawFromAccount(getFromId(command), getTransferAmount(command))) {
-                            if (bank.isValidDepositInAccount(getToId(command), getTransferAmount(command))) {
-                                result = true;
+                    if (checkTransferIdsAreDifferent(command)) {
+                        if (checkTransferAmountDouble(command)) {
+                            if (bank.isValidWithdrawFromAccount(getFromId(command), getTransferAmount(command))) {
+                                if (bank.isValidDepositInAccount(getToId(command), getTransferAmount(command))) {
+                                    result = true;
+                                }
                             }
                         }
                     }
@@ -26,6 +28,16 @@ public class TransferValidator {
             }
         }
         return result;
+    }
+
+    private boolean checkTransferIdsAreDifferent(String command) {
+        String fromId = parsing.getSecondWord(command);
+        String toId = parsing.getThirdWord(command);
+        if (fromId == toId) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 

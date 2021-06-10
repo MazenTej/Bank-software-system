@@ -15,5 +15,6 @@ public class TransferProcessor {
         String toId = parsing.getThirdWord(command);
         double amountTransferred = Double.parseDouble(parsing.getFourthWord(command));
         bank.transferAmount(fromId, toId, amountTransferred);
+
     }
 }
