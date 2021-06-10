@@ -10,6 +10,48 @@ public class PassTimeValidator {
     }
 
     public boolean validatePassTime(String command) {
-        return true;
+        boolean result = false;
+        if (checkPassTimeCommandLength(command)) {
+            if (checkNumberOfMonthsInteger(command)) {
+                if (checkNumberOfMonthsInRange(command)) {
+                    result = true;
+                }
+            }
+
+        }
+        return result;
+    }
+
+    private boolean checkNumberOfMonthsInRange(String command) {
+        Integer months = Integer.parseInt(parsing.getSecondWord(command));
+        if (months >= 1 && months <= 60) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean checkNumberOfMonthsInteger(String command) {
+        boolean result;
+        try {
+            String str = parsing.getSecondWord(command);
+            Integer.parseInt(str);
+            result = true;
+
+        } catch (Exception e) {
+            result = false;
+        }
+        return result;
+    }
+
+
+    private boolean checkPassTimeCommandLength(String command) {
+        boolean result = true;
+        String[] words = command.split("\\s+");
+        if (words.length != 2) {
+            result = false;
+        }
+        return result;
+
     }
 }

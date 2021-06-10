@@ -58,7 +58,7 @@ public class TransferValidatorTest {
     }
 
     @Test
-    void missing_from_id_with_no_corresponding_account_is_invalid() {
+    void missing_from_id_is_invalid() {
         bank.addCheckingAccount(ID1, 0.6);
         Account account1 = bank.retrieveAccount(ID1);
         account1.setAmount(1000);
@@ -71,14 +71,14 @@ public class TransferValidatorTest {
     }
 
     @Test
-    void missing_to_id_with_no_corresponding_account_is_invalid() {
+    void missing_to_id_is_invalid() {
         bank.addCheckingAccount(ID1, 0.6);
         Account account1 = bank.retrieveAccount(ID1);
         account1.setAmount(1000);
         bank.addSavingsAccount(ID2, 0.6);
         Account account2 = bank.retrieveAccount(ID2);
         account2.setAmount(1000);
-        boolean actual = transferValidator.validateTransfer("transfer 51222235 10101010 400");
+        boolean actual = transferValidator.validateTransfer("transfer 12345678 400");
         assertFalse(actual);
 
     }
