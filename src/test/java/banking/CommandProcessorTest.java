@@ -11,6 +11,9 @@ public class CommandProcessorTest {
     CommandProcessor commandProcessor;
     CreateProcessor createProcessor;
     DepositProcessor depositProcessor;
+    WithdrawProcessor withdrawProcessor;
+    TransferProcessor transferProcessor;
+    PassTimeProcessor passTimeProcessor;
     Bank bank;
 
 
@@ -19,7 +22,10 @@ public class CommandProcessorTest {
         bank = new Bank();
         createProcessor = new CreateProcessor(bank);
         depositProcessor = new DepositProcessor(bank);
-        commandProcessor = new CommandProcessor(createProcessor, depositProcessor);
+        withdrawProcessor = new WithdrawProcessor(bank);
+        transferProcessor = new TransferProcessor(bank);
+        passTimeProcessor = new PassTimeProcessor(bank);
+        commandProcessor = new CommandProcessor(createProcessor, depositProcessor, withdrawProcessor, transferProcessor, passTimeProcessor);
 
     }
 
