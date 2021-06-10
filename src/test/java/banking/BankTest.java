@@ -900,7 +900,7 @@ public class BankTest {
     }
 
     @Test
-    void pass_time_calculates_apr_four_time_a_month_for_cd() {
+    void pass_time_calculates_apr_four_times_a_month_for_cd() {
         bank.addCdAccount(ID, 0.6, 1000);
         bank.passTime(1);
         Account actual = bank.retrieveAccount(ID);

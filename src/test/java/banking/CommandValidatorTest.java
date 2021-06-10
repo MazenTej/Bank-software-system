@@ -11,6 +11,8 @@ public class CommandValidatorTest {
     CreateValidator createValidator;
     DepositValidator depositValidator;
     WithdrawValidator withdrawValidator;
+    TransferValidator transferValidator;
+    PassTimeValidator passTimeValidator;
     Bank bank;
 
 
@@ -20,7 +22,9 @@ public class CommandValidatorTest {
         createValidator = new CreateValidator(bank);
         depositValidator = new DepositValidator(bank);
         withdrawValidator = new WithdrawValidator(bank);
-        commandValidator = new CommandValidator(createValidator, depositValidator, withdrawValidator);
+        transferValidator = new TransferValidator(bank);
+        passTimeValidator = new PassTimeValidator(bank);
+        commandValidator = new CommandValidator(createValidator, depositValidator, withdrawValidator, transferValidator, passTimeValidator);
     }
 
     @Test
@@ -56,6 +60,12 @@ public class CommandValidatorTest {
     }
 
     @Test
+    void transfer_misspelled_is_invalid() {
+        boolean actual = commandValidator.validate("ttransfer 12345678 10101010 400");
+        assertFalse(actual);
+    }
+
+    @Test
     void missing_create_is_invalid() {
         boolean actual = commandValidator.validate("checking 12345678 0.6");
         assertFalse(actual);
@@ -74,11 +84,15 @@ public class CommandValidatorTest {
     }
 
     @Test
+    void missing_transfer_is_invalid() {
+        boolean actual = commandValidator.validate("12345678 10101010 400");
+        assertFalse(actual);
+    }
+
+    @Test
     void command_with_extra_spaces_in_the_middle_is_invalid() {
         boolean actual = commandValidator.validate("create     checking   12345678  0.6");
         assertFalse(actual);
-
-
     }
 
     @Test
@@ -101,9 +115,26 @@ public class CommandValidatorTest {
     }
 
     @Test
+    void command_withdraw_is_case_insensitive() {
+        bank.addCheckingAccount("12345678", 0.6);
+        boolean actual = commandValidator.validate("Withdraw 12345678 0");
+        assertTrue(actual);
+    }
+
+    @Test
     void check_for_extra_spaces_in_the_middle_returns_false() {
         boolean actual = commandValidator.checkForExtraSpaces("create    command    is invalid");
         assertFalse(actual);
+    }
+
+    @Test
+    void command_transfer_is_case_insensitive() {
+        bank.addCheckingAccount("12345678", 0.6);
+        bank.addCheckingAccount("10101010", 0.6);
+        boolean actual = commandValidator.validate("Transfer 12345678 10101010 0");
+        assertTrue(actual);
+
+
     }
 
     @Test

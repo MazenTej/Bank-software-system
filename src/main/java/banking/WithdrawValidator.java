@@ -15,7 +15,7 @@ public class WithdrawValidator {
 
         boolean result = false;
         if (checkWithdrawCommandLength(command)) {
-            if (checkWithdrawId(command)) {
+            if (checkWithdrawIdExists(command)) {
                 if (checkWithdrawAmountDouble(command)) {
                     if (checkValidWithdraw(command)) {
                         result = true;
@@ -29,7 +29,7 @@ public class WithdrawValidator {
 
     }
 
-    private boolean checkWithdrawAmountDouble(String command) {
+    public boolean checkWithdrawAmountDouble(String command) {
         boolean result;
         try {
             String str = parsing.getThirdWord(command);
@@ -42,7 +42,7 @@ public class WithdrawValidator {
         return result;
     }
 
-    private boolean checkWithdrawId(String command) {
+    public boolean checkWithdrawIdExists(String command) {
         boolean result = false;
         String id = parsing.getSecondWord(command);
         if (bank.accountExistsWithId(id)) {

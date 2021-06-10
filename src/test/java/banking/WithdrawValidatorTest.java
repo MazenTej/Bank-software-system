@@ -242,7 +242,15 @@ public class WithdrawValidatorTest {
     }
 
     @Test
-    void withdraw_from_cd_account_after_twelve_months_is_valid() {
+    void withdraw_from_cd_account_after_twelve_months_an_amount_less_than_balance_is_invalid() {
+        bank.addCdAccount("12345678", 0.6, 5000);
+        bank.passTime(12);
+        boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 200");
+        assertFalse(actual);
+    }
+
+    @Test
+    void withdraw_from_cd_account_after_exactly_twelve_months_an_amount_more_than_balance_is_valid() {
         bank.addCdAccount("12345678", 0.6, 5000);
         bank.passTime(12);
         boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 200");
@@ -252,7 +260,7 @@ public class WithdrawValidatorTest {
     @Test
     void withdraw_from_cd_account_after_twelve_months_an_amount_more_than_balance_is_valid() {
         bank.addCdAccount("12345678", 0.6, 5000);
-        bank.passTime(12);
+        bank.passTime(16);
         boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 200");
         assertFalse(actual);
     }
