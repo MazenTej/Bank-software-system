@@ -1,13 +1,15 @@
 package banking;
 
-import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Bank {
     private Map<String, Account> accounts;
+    private CommandStorage commandStorage;
 
-    Bank() {
-        accounts = new HashMap<>();
+    public Bank() {
+        accounts = new LinkedHashMap<>();
     }
 
     public Map<String, Account> getAccounts() {
@@ -31,8 +33,8 @@ public class Bank {
     }
 
 
-    public void addCdAccount(String id, double apr, double amount_cd) {
-        accounts.put(id, new Cd(id, apr, amount_cd));
+    public void addCdAccount(String id, double apr, double amountCd) {
+        accounts.put(id, new Cd(id, apr, amountCd));
     }
 
     public boolean accountExistsWithId(String id) {
@@ -43,9 +45,9 @@ public class Bank {
         }
     }
 
-    public boolean isValidDepositInAccount(String id, String deposit_amount) {
+    public boolean isValidDepositInAccount(String id, String depositAmount) {
         Account account = accounts.get(id);
-        boolean isValidDeposit = account.isValidDepositWith(deposit_amount);
+        boolean isValidDeposit = account.isValidDepositWith(depositAmount);
         return isValidDeposit;
     }
 
@@ -61,5 +63,50 @@ public class Bank {
 
         }
 
+    }
+
+    public Account retrieveAccount(String id) {
+        Account account = accounts.get(id);
+        return account;
+
+    }
+
+
+    public void passTime(int months) {
+        for (int j = 1; j <= months; j++) {
+            Iterator<String> it = accounts.keySet().iterator();
+            while (it.hasNext()) {
+                String key = it.next();
+                Account account = retrieveAccount(key);
+                if (account.getAmount() == 0) {
+                    it.remove();
+                } else if (account.getAmount() < 100) {
+                    withdrawAmount(key, 25);
+                }
+                account.passTime(months);
+            }
+        }
+
+
+    }
+
+
+    public boolean isValidWithdrawFromAccount(String id, String withdrawAmount) {
+        Account account = accounts.get(id);
+        boolean isValidWithdraw = account.isValidWithdraw(withdrawAmount);
+        return isValidWithdraw;
+    }
+
+    public String getAccountType(String key) {
+        Account account = accounts.get(key);
+        String accountType = account.getAccountType(key);
+        return accountType;
+    }
+
+
+    public boolean isValidTransferBetweenAccount(String fromId) {
+        Account account = retrieveAccount(fromId);
+        boolean isValidTransfer = account.isValidTransfer();
+        return isValidTransfer;
     }
 }

@@ -13,50 +13,38 @@ public class WithdrawValidator {
 
     public boolean validateWithdraw(String command) {
         boolean result = false;
-        if (checkWithdrawCommandLength(command)) {
-            if (checkWithdrawId(command)) {
-                if (checkWithdrawAmountDouble(command)) {
-                    result = true;
+        if (parsing.checkCommandLength(command, 3)) {
+            if (bank.accountExistsWithId(getWithdrawId(command))) {
+                if (parsing.checkStringDouble(getWithdrawAmount(command))) {
+                    if (checkValidWithdraw(command)) {
+                        result = true;
+                    }
                 }
 
             }
         }
         return result;
-
-
     }
 
-    private boolean checkWithdrawAmountDouble(String command) {
-        boolean result;
-        try {
-            String str = parsing.getThirdWord(command);
-            Double.parseDouble(str);
-            result = true;
-
-        } catch (Exception e) {
-            result = false;
-        }
-        return result;
-    }
-
-    private boolean checkWithdrawId(String command) {
+    public boolean checkValidWithdraw(String command) {
         boolean result = false;
         String id = parsing.getSecondWord(command);
-        if (bank.accountExistsWithId(id)) {
+        String withdraw_amount = parsing.getThirdWord(command);
+        boolean isValid = bank.isValidWithdrawFromAccount(id, withdraw_amount);
+        if (isValid) {
             result = true;
         }
         return result;
     }
 
+    public String getWithdrawId(String command) {
+        String withdrawId = parsing.getSecondWord(command);
+        return withdrawId;
+    }
 
-    public boolean checkWithdrawCommandLength(String command) {
-        boolean result = true;
-        String[] words = command.split("\\s+");
-        if (words.length != 3) {
-            result = false;
-        }
-        return result;
-
+    public String getWithdrawAmount(String command) {
+        String withdrawAmount = parsing.getThirdWord(command);
+        return withdrawAmount;
     }
 }
 

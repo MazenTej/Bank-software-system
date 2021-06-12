@@ -3,8 +3,7 @@ package banking;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BankTest {
     public static final String ID = "12345678";
@@ -34,9 +33,12 @@ public class BankTest {
 
     Bank bank;
 
+
     Cd cd;
     Checking checking;
     Savings savings;
+
+    @Test
 
     @BeforeEach
     void setUp() {
@@ -229,7 +231,8 @@ public class BankTest {
 
     @Test
     void savings_account_has_zero_amount_initially() {
-        assertEquals(AMOUNT, savings.getAmount());
+        bank.addSavingsAccount(ID, APR);
+        assertEquals(AMOUNT, bank.getAccounts().get(ID).getAmount());
     }
 
     @Test
@@ -247,7 +250,6 @@ public class BankTest {
         Savings actual = (Savings) bank.getAccounts().get(ID);
         assertEquals(DOLLARS_AND_CENTS_AMOUNT_DEPOSITED, actual.getAmount());
     }
-
 
     @Test
     void deposit_dollars_amounts_twice_into_savings_account() {
@@ -562,7 +564,6 @@ public class BankTest {
 
     }
 
-
     @Test
     void transfer_from_checking_account_amount_in_dollars_more_than_balance_to_empty_savings_account() {
         bank.addCheckingAccount(ID, APR);
@@ -838,5 +839,82 @@ public class BankTest {
         assertEquals(DOLLARS_AMOUNT_SET - DOLLARS_AMOUNT_TRANSFERRED_1 + (DOLLARS_AND_CENTS_AMOUNT_SET_2 + DOLLARS_AMOUNT_TRANSFERRED_1), actual1.getAmount());
         assertEquals(AMOUNT, actual2.getAmount());
     }
+
+    @Test
+    void retrieve_account_gets_account_from_id() {
+        bank.addCheckingAccount(ID, APR);
+        bank.addSavingsAccount(ID2, APR);
+        bank.addCdAccount(ID3, APR, AMOUNT_CD);
+        Account account1 = bank.retrieveAccount(ID2);
+        Account account2 = bank.retrieveAccount(ID);
+        Account account3 = bank.retrieveAccount(ID3);
+        assertTrue(account1 instanceof Savings);
+        assertTrue(account2 instanceof Checking);
+        assertTrue(account3 instanceof Cd);
+    }
+
+
+    @Test
+    void pass_time_closes_empty_checking_and_savings_accounts_after_one_month() {
+        bank.addCheckingAccount(ID2, APR);
+        bank.addSavingsAccount(ID, APR);
+        bank.passTime(1);
+        assertFalse(bank.getAccounts().containsKey(ID));
+        assertFalse(bank.getAccounts().containsKey(ID2));
+    }
+
+    @Test
+    void pass_time_deducts_fee_from_checking_and_savings_accounts_with_balance_less_than_hundred_every_month_and_calculates_apr() {
+        bank.addCheckingAccount(ID, APR);
+        bank.addSavingsAccount(ID2, APR);
+        Account actual1 = bank.retrieveAccount(ID);
+        Account actual2 = bank.retrieveAccount(ID2);
+        actual1.setAmount(50);
+        actual2.setAmount(90);
+        bank.passTime(1);
+        assertEquals(actual1.getAmount(), 25.0125);
+        assertEquals(actual2.getAmount(), 65.0325);
+
+    }
+
+    @Test
+    void pass_time_deducts_from_account_with_balance_less_than_hundred_until_it_gets_to_zero_and_closes_it() {
+        bank.addSavingsAccount(ID, APR);
+        bank.addCheckingAccount(ID2, APR);
+        Account actual1 = bank.retrieveAccount(ID);
+        Account actual2 = bank.retrieveAccount(ID2);
+        actual2.setAmount(25);
+        actual1.setAmount(50);
+        bank.passTime(4);
+        assertTrue(bank.getAccounts().isEmpty());
+    }
+
+    @Test
+    void pass_time_calculates_apr_every_month() {
+        bank.addCheckingAccount(ID, 0.6);
+        bank.addCdAccount(ID2, 0.6, 1000);
+        Account actual = bank.retrieveAccount(ID);
+        actual.setAmount(5000);
+        bank.passTime(1);
+        assertEquals(actual.getAmount(), 5002.5);
+
+    }
+
+    @Test
+    void pass_time_calculates_apr_four_times_a_month_for_cd() {
+        bank.addCdAccount(ID, 0.6, 1000);
+        bank.passTime(1);
+        Account actual = bank.retrieveAccount(ID);
+        assertEquals(actual.getAmount(), 1002.0015005000625);
+
+    }
+
+    @Test
+    void get_account_type() {
+        bank.addCheckingAccount("12345678", 0.6);
+        String type = bank.getAccountType("12345678");
+        assertEquals(type, "Checking");
+    }
+
 
 }

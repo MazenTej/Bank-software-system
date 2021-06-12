@@ -12,51 +12,15 @@ public class DepositValidator {
 
 
     public boolean validateDeposit(String command) {
-
         boolean result = false;
-        if (checkDepositCommandLength(command)) {
-            if (checkDepositId(command)) {
-                if (checkDepositAmountDouble(command)) {
+        if (parsing.checkCommandLength(command, 3)) {
+            if (bank.accountExistsWithId(getId(command))) {
+                if (parsing.checkStringDouble(getDepositAmount(command))) {
                     if (checkValidDeposit(command)) {
                         result = true;
                     }
                 }
             }
-        }
-        return result;
-
-    }
-
-
-    public boolean checkDepositId(String command) {
-        boolean result = false;
-        String id = parsing.getSecondWord(command);
-        if (bank.accountExistsWithId(id)) {
-            result = true;
-        }
-        return result;
-    }
-
-
-    public boolean checkDepositCommandLength(String command) {
-        boolean result = true;
-        String[] words = command.split("\\s+");
-        if (words.length != 3) {
-            result = false;
-        }
-        return result;
-
-    }
-
-    public boolean checkDepositAmountDouble(String command) {
-        boolean result;
-        try {
-            String str = parsing.getThirdWord(command);
-            Double.parseDouble(str);
-            result = true;
-
-        } catch (Exception e) {
-            result = false;
         }
         return result;
 
@@ -72,6 +36,15 @@ public class DepositValidator {
             result = true;
         }
         return result;
+    }
 
+    public String getDepositAmount(String command) {
+        String depositAmount = parsing.getThirdWord(command);
+        return depositAmount;
+    }
+
+    public String getId(String command) {
+        String id = parsing.getSecondWord(command);
+        return id;
     }
 }

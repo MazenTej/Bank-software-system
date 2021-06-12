@@ -16,5 +16,30 @@ public class Checking extends Account {
         }
     }
 
+    @Override
+    public void passTime(int i) {
+        calculateApr();
+    }
+
+    @Override
+    public boolean isValidWithdraw(String withdraw_amount) {
+        boolean result = false;
+        double amount = Double.parseDouble(withdraw_amount);
+        if (amount >= 0 && amount <= 400) {
+            result = true;
+        }
+        return result;
+    }
+
+    @Override
+    public String getAccountType(String key) {
+        return "Checking";
+    }
+
+    @Override
+    public boolean isValidTransfer() {
+        return true;
+    }
+
 
 }

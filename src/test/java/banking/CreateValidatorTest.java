@@ -211,52 +211,6 @@ public class CreateValidatorTest {
 
 
     @Test
-    void test_id_length_returns_false_if_different_than_eight() {
-        boolean actual = createValidator.checkIdLength("create checking 123457 0.6");
-        assertFalse(actual);
-
-    }
-
-    @Test
-    void string_with_characters_other_than_numbers_returns_false() {
-        boolean actual = createValidator.checkIdHasOnlyNumbers("create checking 1234ma56 0.6");
-        assertFalse(actual);
-    }
-
-
-    @Test
-    void apr_is_not_a_double_returns_false() {
-        boolean actual = createValidator.checkAprDouble("create checking 12345678 nv0.6");
-        assertFalse(actual);
-    }
-
-    @Test
-    void double_apr_not_in_range_returns_false() {
-        boolean actual = createValidator.checkAprRange("create checking 12345678 12");
-        assertFalse(actual);
-    }
-
-    @Test
-    void account_type_different_than_cd_returns_false_for_number_of_elements_different_than_four() {
-        boolean actual = createValidator.checkCommandLengthForSavingsAndChecking("create checking 12345678 0.6 100");
-        assertFalse(actual);
-    }
-
-    @Test
-    void account_type_cd_returns_false_for_number_of_elements_different_than_five() {
-        boolean actual = createValidator.checkCommandLengthForCd("create cd 12345678 0.6");
-        assertFalse(actual);
-
-    }
-
-
-    @Test
-    void cd_amount_is_not_a_double_returns_false() {
-        boolean actual = createValidator.checkCdAmountDouble("create cd 12345678 0.6 10gg0");
-        assertFalse(actual);
-    }
-
-    @Test
     void double_cd_amount_not_in_range_returns_false() {
         boolean actual = createValidator.checkCdAmountInRange("create cd 12345678 0.6 1000000");
         assertFalse(actual);
