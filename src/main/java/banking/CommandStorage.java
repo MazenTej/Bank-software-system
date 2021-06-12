@@ -11,7 +11,6 @@ public class CommandStorage {
     protected List<String> invalid_commands;
     private Bank bank;
     private List<String> output;
-    private List<String> transaction_history;
 
 
     CommandStorage(Bank bank) {
@@ -20,7 +19,6 @@ public class CommandStorage {
         invalid_commands = new ArrayList<String>();
         valid_commands = new LinkedHashMap<>();
         output = new ArrayList<String>();
-        transaction_history = new ArrayList<String>();
 
 
     }
@@ -45,18 +43,18 @@ public class CommandStorage {
 
     public void addDepositWithdrawToTransactionHistory(String command) {
         if (!valid_commands.containsKey(getId(command))) {
-            valid_commands.put(getId(command), transaction_history);
+            valid_commands.put(getId(command), new ArrayList<String>());
         }
         valid_commands.get(getId(command)).add(command);
     }
 
     public void addTransferToTransactionHistory(String command) {
         if (!valid_commands.containsKey(getFromId(command))) {
-            valid_commands.put(getFromId(command), transaction_history);
+            valid_commands.put(getFromId(command), new ArrayList<String>());
         }
         valid_commands.get(getFromId(command)).add(command);
         if (!valid_commands.containsKey(getToId(command))) {
-            valid_commands.put(getToId(command), transaction_history);
+            valid_commands.put(getToId(command), new ArrayList<String>());
         }
         valid_commands.get(getToId(command)).add(command);
 

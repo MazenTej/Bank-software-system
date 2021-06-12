@@ -103,10 +103,10 @@ public class Bank {
         return accountType;
     }
 
-    public boolean isValidTransferBetweenAccounts(String fromId) {
-        Account account = accounts.get(fromId);
+
+    public boolean isValidTransferBetweenAccount(String fromId) {
+        Account account = retrieveAccount(fromId);
         boolean isValidTransfer = account.isValidTransfer();
         return isValidTransfer;
-
     }
 }
