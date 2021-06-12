@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PassTimeProcessorTest {
     PassTimeProcessor passTimeProcessor;
     Bank bank;
+    
     String ID1 = "123456788";
     String ID2 = "10101010";
 

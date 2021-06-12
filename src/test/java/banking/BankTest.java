@@ -33,6 +33,7 @@ public class BankTest {
 
     Bank bank;
 
+
     Cd cd;
     Checking checking;
     Savings savings;
@@ -906,6 +907,13 @@ public class BankTest {
         Account actual = bank.retrieveAccount(ID);
         assertEquals(actual.getAmount(), 1002.0015005000625);
 
+    }
+
+    @Test
+    void get_account_type() {
+        bank.addCheckingAccount("12345678", 0.6);
+        String type = bank.getAccountType("12345678");
+        assertEquals(type, "Checking");
     }
 
 

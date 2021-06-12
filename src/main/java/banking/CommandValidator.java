@@ -32,7 +32,8 @@ public class CommandValidator {
             } else if (parsing.getFirstWord(command).equalsIgnoreCase("transfer")) {
                 return transferValidator.validateTransfer(command);
             } else if (parsing.getFirstWord(command).equalsIgnoreCase("pass")) {
-                return passTimeValidator.validatePassTime(command);
+                return
+                        passTimeValidator.validatePassTime(command);
             } else {
                 return false;
             }

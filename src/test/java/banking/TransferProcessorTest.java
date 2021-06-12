@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TransferProcessorTest {
     TransferProcessor transferProcessor;
     Bank bank;
+    
 
     String ID1 = "12345678";
     String ID2 = "10101010";

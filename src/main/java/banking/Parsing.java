@@ -31,6 +31,54 @@ public class Parsing {
     public String getFifthWord(String command) {
         String[] words = command.split(" ");
         return words[4];
+    }
+
+    public boolean checkIdLength(String id) {
+        if (id.length() != 8) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean checkIdHasOnlyNumbers(String id) {
+        if (id.matches(".*[^0-9]+.*")) {
+            return false;
+        } else {
+            return true;
+        }
 
     }
+
+    public boolean checkStringDouble(String string) {
+        boolean result;
+        try {
+            Double.parseDouble(string);
+            result = true;
+
+        } catch (Exception e) {
+            result = false;
+        }
+        return result;
+    }
+
+    public boolean checkAprRange(String apr) {
+        double doubleApr = Double.parseDouble(apr);
+        if (doubleApr < 0 || doubleApr > 10) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean checkCommandLength(String command, Integer length) {
+        boolean result = true;
+        String[] words = command.split("\\s+");
+        if (words.length != length) {
+            result = false;
+        }
+        return result;
+    }
+
+
 }

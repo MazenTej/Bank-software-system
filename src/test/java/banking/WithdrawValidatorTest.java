@@ -26,12 +26,6 @@ public class WithdrawValidatorTest {
 
 
     @Test
-    void deposit_command_has_number_of_elements_different_than_three_returns_false() {
-        boolean actual = withdrawValidator.checkWithdrawCommandLength("withdraw 12345678");
-        assertFalse(actual);
-    }
-
-    @Test
     void id_with_no_corresponding_account_is_invalid() {
         boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 500");
         assertFalse(actual);

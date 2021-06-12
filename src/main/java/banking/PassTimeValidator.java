@@ -11,7 +11,7 @@ public class PassTimeValidator {
 
     public boolean validatePassTime(String command) {
         boolean result = false;
-        if (checkPassTimeCommandLength(command)) {
+        if (parsing.checkCommandLength(command, 2)) {
             if (checkNumberOfMonthsInteger(command)) {
                 if (checkNumberOfMonthsInRange(command)) {
                     result = true;
@@ -45,13 +45,4 @@ public class PassTimeValidator {
     }
 
 
-    private boolean checkPassTimeCommandLength(String command) {
-        boolean result = true;
-        String[] words = command.split("\\s+");
-        if (words.length != 2) {
-            result = false;
-        }
-        return result;
-
-    }
 }

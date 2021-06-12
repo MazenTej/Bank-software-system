@@ -36,9 +36,17 @@ public class Savings extends Account {
                 result = true;
                 setMonths(0);
             }
-        } else {
-            result = false;
         }
         return result;
+    }
+
+    @Override
+    public String getAccountType(String key) {
+        return "Savings";
+    }
+
+    @Override
+    public boolean isValidTransfer() {
+        return true;
     }
 }

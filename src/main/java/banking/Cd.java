@@ -1,11 +1,11 @@
 package banking;
 
 public class Cd extends Account {
-    protected Integer months;
+    protected Integer monthsPassed;
 
     public Cd(String id, double apr, double amount_cd) {
         super(id, apr, amount_cd);
-        months = 0;
+        monthsPassed = 0;
 
     }
 
@@ -15,8 +15,8 @@ public class Cd extends Account {
     }
 
     @Override
-    public void passTime(int i) {
-        months += i;
+    public void passTime(int months) {
+        monthsPassed += months;
         for (int j = 1; j <= 4; j++) {
             calculateApr();
         }
@@ -26,11 +26,21 @@ public class Cd extends Account {
     @Override
     public boolean isValidWithdraw(String withdraw_amount) {
         double amount = Double.parseDouble(withdraw_amount);
-        if (months >= 12 && amount >= getAmount()) {
+        if (monthsPassed >= 12 && amount >= getAmount()) {
             return true;
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String getAccountType(String key) {
+        return "Cd";
+    }
+
+    @Override
+    public boolean isValidTransfer() {
+        return false;
     }
 
 

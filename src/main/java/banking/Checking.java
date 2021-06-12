@@ -31,5 +31,15 @@ public class Checking extends Account {
         return result;
     }
 
+    @Override
+    public String getAccountType(String key) {
+        return "Checking";
+    }
+
+    @Override
+    public boolean isValidTransfer() {
+        return true;
+    }
+
 
 }

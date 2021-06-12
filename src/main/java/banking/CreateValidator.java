@@ -10,142 +10,41 @@ public class CreateValidator {
     }
 
     public boolean validateCreate(String command) {
-
-        String accountType = parsing.getSecondWord(command);
-        if (accountType.equalsIgnoreCase("checking") || accountType.equalsIgnoreCase("savings")) {
-            if (checkCommandLengthForSavingsAndChecking(command)) {
+        boolean result = false;
+        if (getAccountType(command).equalsIgnoreCase("checking") || getAccountType(command).equalsIgnoreCase("savings")) {
+            if (parsing.checkCommandLength(command, 4)) {
                 return validateCommand(command);
-
-            } else {
-                return false;
             }
-        } else if (accountType.equalsIgnoreCase("cd")) {
-            if (checkCommandLengthForCd(command)) {
+        } else if (getAccountType(command).equalsIgnoreCase("cd")) {
+            if (parsing.checkCommandLength(command, 5)) {
                 if (validateCommand(command)) {
-                    if (checkCdAmountDouble(command)) {
+                    if (parsing.checkStringDouble(getCdAmount(command))) {
                         if (checkCdAmountInRange(command)) {
-                            return true;
-                        } else {
-                            return false;
+                            result = true;
                         }
-                    } else {
-                        return false;
                     }
-                } else {
-                    return false;
                 }
-            } else {
-                return false;
             }
-        } else {
-            return false;
         }
+        return result;
 
 
     }
 
     public boolean validateCommand(String command) {
-        String id = parsing.getThirdWord(command);
-        if (checkIdLength(command)) {
-            if (checkIdHasOnlyNumbers(command)) {
-                if (bank.accountExistsWithId(id)) {
+        boolean result = false;
+        if (parsing.checkIdLength(getId(command))) {
+            if (parsing.checkIdHasOnlyNumbers(getId(command))) {
+                if (bank.accountExistsWithId(getId(command))) {
                     return false;
                 } else {
-                    if (checkAprDouble(command)) {
-                        if (checkAprRange(command)) {
-                            return true;
-
-                        } else {
-                            return false;
+                    if (parsing.checkStringDouble(getApr(command))) {
+                        if (parsing.checkAprRange(getApr(command))) {
+                            result = true;
                         }
-                    } else {
-                        return false;
                     }
                 }
-            } else {
-                return false;
             }
-        } else {
-            return false;
-        }
-    }
-
-
-    public boolean checkIdLength(String command) {
-        if (parsing.getThirdWord(command).length() != 8) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-
-    public boolean checkIdHasOnlyNumbers(String command) {
-        String id = parsing.getThirdWord(command);
-        if (id.matches(".*[^0-9]+.*")) {
-            return false;
-        } else {
-            return true;
-        }
-
-    }
-
-
-    public boolean checkAprDouble(String command) {
-        boolean result;
-
-        try {
-            String str = parsing.getFourthWord(command);
-            Double.parseDouble(str);
-            result = true;
-
-        } catch (Exception e) {
-            result = false;
-        }
-        return result;
-
-    }
-
-
-    public boolean checkAprRange(String command) {
-        String str = parsing.getFourthWord(command);
-        double apr = Double.parseDouble(str);
-        if (apr < 0 || apr > 10) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public boolean checkCommandLengthForSavingsAndChecking(String command) {
-        boolean result = true;
-        String[] words = command.split("\\s+");
-        if (words.length != 4) {
-            result = false;
-        }
-        return result;
-    }
-
-    public boolean checkCommandLengthForCd(String command) {
-        boolean result = true;
-        String[] words = command.split("\\s+");
-        if (words.length != 5) {
-            result = false;
-        }
-        return result;
-    }
-
-
-    public boolean checkCdAmountDouble(String command) {
-        boolean result;
-
-        try {
-            String str = parsing.getFifthWord(command);
-            Double.parseDouble(str);
-            result = true;
-
-        } catch (Exception e) {
-            result = false;
         }
         return result;
     }
@@ -159,6 +58,25 @@ public class CreateValidator {
         } else {
             return true;
         }
+    }
 
+    public String getAccountType(String command) {
+        String accountType = parsing.getSecondWord(command);
+        return accountType;
+    }
+
+    public String getCdAmount(String command) {
+        String cdAmount = parsing.getFifthWord(command);
+        return cdAmount;
+    }
+
+    public String getId(String command) {
+        String id = parsing.getThirdWord(command);
+        return id;
+    }
+
+    public String getApr(String command) {
+        String apr = parsing.getFourthWord(command);
+        return apr;
     }
 }

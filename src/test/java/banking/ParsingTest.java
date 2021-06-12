@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ParsingTest {
     Parsing parsing;
@@ -71,5 +72,36 @@ public class ParsingTest {
 
         assertEquals("1000", actual);
     }
+
+    @Test
+    void check_id_length_returns_false_if_length_not_eight() {
+        boolean actual = parsing.checkIdLength("123");
+        assertFalse(actual);
+    }
+
+    @Test
+    void check_id_has_only_numbers_returns_false_if_id_has_characters_other_than_numbers() {
+        boolean actual = parsing.checkIdHasOnlyNumbers("12aa3456");
+        assertFalse(actual);
+    }
+
+    @Test
+    void check_string_double_returns_false_if_string_can_not_be_parsed_to_double() {
+        boolean actual = parsing.checkStringDouble("1a");
+        assertFalse(actual);
+    }
+
+    @Test
+    void check_apr_range_returns_false_if_apr_not_in_range() {
+        boolean actual = parsing.checkAprRange("15");
+        assertFalse(actual);
+    }
+
+    @Test
+    void check_command_length_returns_false_if_lengths_do_not_match() {
+        boolean actual = parsing.checkCommandLength("create checking 12345678", 4);
+        assertFalse(actual);
+    }
+
 
 }

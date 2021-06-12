@@ -64,4 +64,8 @@ public abstract class Account {
     }
 
     public abstract boolean isValidWithdraw(String withdraw_amount);
+
+    public abstract String getAccountType(String key);
+
+    public abstract boolean isValidTransfer();
 }

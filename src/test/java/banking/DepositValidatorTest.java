@@ -158,25 +158,6 @@ public class DepositValidatorTest {
 
 
     @Test
-    void id_with_no_corresponding_account_returns_false() {
-        boolean actual = depositValidator.checkDepositId("deposit 12345678 500");
-        assertFalse(actual);
-    }
-
-    @Test
-    void deposit_command_has_number_of_elements_different_than_three_returns_false() {
-        boolean actual = depositValidator.checkDepositCommandLength("deposit 12345678");
-        assertFalse(actual);
-    }
-
-
-    @Test
-    void deposit_amount_is_not_a_double_returns_false() {
-        boolean actual = depositValidator.checkDepositAmountDouble("deposit 12345678 50gdg");
-        assertFalse(actual);
-    }
-
-    @Test
     void check_account_returns_false_for_wrong_account_type() {
         bank.addCdAccount("12345678", 0.6, 1000);
         boolean actual = depositValidator.checkValidDeposit("deposit 12345678 1000");

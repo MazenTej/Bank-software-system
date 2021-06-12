@@ -12,11 +12,10 @@ public class WithdrawValidator {
 
 
     public boolean validateWithdraw(String command) {
-
         boolean result = false;
-        if (checkWithdrawCommandLength(command)) {
-            if (checkWithdrawIdExists(command)) {
-                if (checkWithdrawAmountDouble(command)) {
+        if (parsing.checkCommandLength(command, 3)) {
+            if (bank.accountExistsWithId(getWithdrawId(command))) {
+                if (parsing.checkStringDouble(getWithdrawAmount(command))) {
                     if (checkValidWithdraw(command)) {
                         result = true;
                     }
@@ -25,41 +24,6 @@ public class WithdrawValidator {
             }
         }
         return result;
-
-
-    }
-
-    public boolean checkWithdrawAmountDouble(String command) {
-        boolean result;
-        try {
-            String str = parsing.getThirdWord(command);
-            Double.parseDouble(str);
-            result = true;
-
-        } catch (Exception e) {
-            result = false;
-        }
-        return result;
-    }
-
-    public boolean checkWithdrawIdExists(String command) {
-        boolean result = false;
-        String id = parsing.getSecondWord(command);
-        if (bank.accountExistsWithId(id)) {
-            result = true;
-        }
-        return result;
-    }
-
-
-    public boolean checkWithdrawCommandLength(String command) {
-        boolean result = true;
-        String[] words = command.split("\\s+");
-        if (words.length != 3) {
-            result = false;
-        }
-        return result;
-
     }
 
     public boolean checkValidWithdraw(String command) {
@@ -71,6 +35,16 @@ public class WithdrawValidator {
             result = true;
         }
         return result;
+    }
+
+    public String getWithdrawId(String command) {
+        String withdrawId = parsing.getSecondWord(command);
+        return withdrawId;
+    }
+
+    public String getWithdrawAmount(String command) {
+        String withdrawAmount = parsing.getThirdWord(command);
+        return withdrawAmount;
     }
 }
 
