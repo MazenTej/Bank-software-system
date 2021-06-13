@@ -24,12 +24,10 @@ public class DepositValidator {
 
     private boolean isIdValid(String command) {
         boolean result = false;
-        if (parsing.checkIdLength(getId(command))) {
-            if (parsing.checkIdHasOnlyNumbers(getId(command))) {
-                if (bank.accountExistsWithId(getId(command))) {
-                    result = true;
-                }
-            }
+        if (parsing.checkIdLength(getId(command)) && parsing.checkIdHasOnlyNumbers(getId(command)) && bank.accountExistsWithId(getId(command))) {
+            result = true;
+
+
         }
         return result;
     }

@@ -70,20 +70,25 @@ public class Bank {
 
     }
 
+    public void passTimeForAccount(Integer months) {
+        Iterator<String> it = accounts.keySet().iterator();
+        while (it.hasNext()) {
+            String key = it.next();
+            Account account = retrieveAccount(key);
+            if (account.getAmount() == 0) {
+                it.remove();
+            } else if (account.getAmount() < 100) {
+                withdrawAmount(key, 25);
+            }
+            account.passTime(months);
+        }
+
+    }
+
 
     public void passTime(int months) {
         for (int j = 1; j <= months; j++) {
-            Iterator<String> it = accounts.keySet().iterator();
-            while (it.hasNext()) {
-                String key = it.next();
-                Account account = retrieveAccount(key);
-                if (account.getAmount() == 0) {
-                    it.remove();
-                } else if (account.getAmount() < 100) {
-                    withdrawAmount(key, 25);
-                }
-                account.passTime(months);
-            }
+            passTimeForAccount(months);
         }
 
 

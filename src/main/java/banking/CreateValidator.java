@@ -11,18 +11,10 @@ public class CreateValidator {
 
     public boolean validateCreate(String command) {
         boolean result = false;
-        if (getAccountType(command).equalsIgnoreCase("checking") || getAccountType(command).equalsIgnoreCase("savings")) {
-            if (parsing.checkCommandLength(command, 4)) {
-                return validateCommand(command);
-            }
-        } else if (getAccountType(command).equalsIgnoreCase("cd")) {
-            if (parsing.checkCommandLength(command, 5)) {
-                if (validateCommand(command)) {
-                    if (checkCdAmount(command)) {
-                        result = true;
-                    }
-                }
-            }
+        if ((getAccountType(command).equalsIgnoreCase("checking") || getAccountType(command).equalsIgnoreCase("savings")) && parsing.checkCommandLength(command, 4)) {
+            return validateCommand(command);
+        } else if (getAccountType(command).equalsIgnoreCase("cd") && parsing.checkCommandLength(command, 5) && validateCommand(command) && checkCdAmount(command)) {
+            result = true;
         }
         return result;
 
@@ -59,10 +51,9 @@ public class CreateValidator {
 
     public boolean checkId(String command) {
         boolean result = false;
-        if (parsing.checkIdLength(getId(command))) {
-            if (parsing.checkIdHasOnlyNumbers(getId(command))) {
-                result = true;
-            }
+        if (parsing.checkIdLength(getId(command)) && parsing.checkIdHasOnlyNumbers(getId(command))) {
+            result = true;
+
         }
         return result;
     }

@@ -27,13 +27,17 @@ public class Output {
             String id = account.getId();
             String accountState = formatAccountState(key);
             output.add(accountState);
-            if (commandStorage.validCommands.get(id) != null) {
-                for (String s : commandStorage.validCommands.get(id)) {
-                    output.add(s);
-                }
-            }
+            addValidCommandsToOutput(id);
         }
 
+    }
+
+    private void addValidCommandsToOutput(String id) {
+        if (commandStorage.validCommands.get(id) != null) {
+            for (String s : commandStorage.validCommands.get(id)) {
+                output.add(s);
+            }
+        }
     }
 
     public List<String> getOutput() {
@@ -42,7 +46,6 @@ public class Output {
             output.add(s);
         }
         return output;
-
     }
 
     public String formatAccountState(String key) {

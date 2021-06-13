@@ -26,12 +26,8 @@ public class WithdrawValidator {
 
     private boolean isIdValid(String command) {
         boolean result = false;
-        if (parsing.checkIdLength(getWithdrawId(command))) {
-            if (parsing.checkIdHasOnlyNumbers(getWithdrawId(command))) {
-                if (bank.accountExistsWithId(getWithdrawId(command))) {
-                    result = true;
-                }
-            }
+        if (parsing.checkIdLength(getWithdrawId(command)) && parsing.checkIdHasOnlyNumbers(getWithdrawId(command)) && bank.accountExistsWithId(getWithdrawId(command))) {
+            result = true;
         }
         return result;
 
