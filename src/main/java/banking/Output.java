@@ -10,13 +10,13 @@ public class Output {
     public Parsing parsing;
     private Bank bank;
     private CommandStorage commandStorage;
-    private List<String> output;
+    private List<String> finalOutput;
 
     Output(Bank bank, CommandStorage commandStorage) {
         parsing = new Parsing();
         this.bank = bank;
         this.commandStorage = commandStorage;
-        output = new ArrayList<String>();
+        finalOutput = new ArrayList<String>();
     }
 
     public void addValidCommands() {
@@ -26,7 +26,7 @@ public class Output {
             Account account = bank.retrieveAccount(key);
             String id = account.getId();
             String accountState = formatAccountState(key);
-            output.add(accountState);
+            finalOutput.add(accountState);
             addValidCommandsToOutput(id);
         }
 
@@ -35,7 +35,7 @@ public class Output {
     private void addValidCommandsToOutput(String id) {
         if (commandStorage.validCommands.get(id) != null) {
             for (String s : commandStorage.validCommands.get(id)) {
-                output.add(s);
+                finalOutput.add(s);
             }
         }
     }
@@ -43,9 +43,9 @@ public class Output {
     public List<String> getOutput() {
         addValidCommands();
         for (String s : commandStorage.invalidCommands) {
-            output.add(s);
+            finalOutput.add(s);
         }
-        return output;
+        return finalOutput;
     }
 
     public String formatAccountState(String key) {

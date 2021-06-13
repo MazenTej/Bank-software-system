@@ -58,8 +58,8 @@ public abstract class Account {
 
     public void calculateApr() {
         double mult = (apr / 100) / 12;
-        double amount = getAmount();
-        setAmount(amount + (amount * mult));
+        double balance = getAmount();
+        setAmount(balance + (balance * mult));
 
     }
 

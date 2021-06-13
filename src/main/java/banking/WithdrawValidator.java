@@ -13,13 +13,8 @@ public class WithdrawValidator {
 
     public boolean validateWithdraw(String command) {
         boolean result = false;
-        if (parsing.checkCommandLength(command, 3) && isIdValid(command)) {
-            if (parsing.checkStringDouble(getWithdrawAmount(command)) && checkValidWithdraw(command)) {
-                result = true;
-
-            }
-
-
+        if (parsing.checkCommandLength(command, 3) && isIdValid(command) && parsing.checkStringDouble(getWithdrawAmount(command)) && checkValidWithdraw(command)) {
+            result = true;
         }
         return result;
     }

@@ -46,7 +46,7 @@ public class MasterControlTest {
         transferProcessor = new TransferProcessor(bank);
         passTimeProcessor = new PassTimeProcessor(bank);
 
-        commandStorage = new CommandStorage(bank);
+        commandStorage = new CommandStorage();
         output = new Output(bank, commandStorage);
 
 

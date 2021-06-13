@@ -10,12 +10,10 @@ public class CommandStorage {
     public Parsing parsing;
     protected Map<String, List<String>> validCommands;
     protected List<String> invalidCommands;
-    private Bank bank;
 
 
-    CommandStorage(Bank bank) {
+    CommandStorage() {
         parsing = new Parsing();
-        this.bank = bank;
         invalidCommands = new ArrayList<String>();
         validCommands = new LinkedHashMap<>();
 

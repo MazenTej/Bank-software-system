@@ -37,14 +37,10 @@ public class CreateValidator {
 
     public boolean validateCommand(String command) {
         boolean result = false;
-        if (checkId(command)) {
-            if (bank.accountExistsWithId(getId(command))) {
-                return false;
-            } else {
-                if (checkApr(getApr(command))) {
-                    result = true;
-                }
-            }
+        if (bank.accountExistsWithId(getId(command))) {
+            return false;
+        } else if (checkId(command) && checkApr(getApr(command))) {
+            result = true;
         }
         return result;
     }

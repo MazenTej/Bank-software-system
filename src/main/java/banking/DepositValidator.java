@@ -13,10 +13,8 @@ public class DepositValidator {
 
     public boolean validateDeposit(String command) {
         boolean result = false;
-        if (parsing.checkCommandLength(command, 3) && isIdValid(command)) {
-            if (parsing.checkStringDouble(getDepositAmount(command)) && checkValidDeposit(command)) {
-                result = true;
-            }
+        if (parsing.checkCommandLength(command, 3) && isIdValid(command) && parsing.checkStringDouble(getDepositAmount(command)) && checkValidDeposit(command)) {
+            result = true;
         }
         return result;
 
