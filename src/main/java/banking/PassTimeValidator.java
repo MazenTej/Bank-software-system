@@ -2,46 +2,38 @@ package banking;
 
 public class PassTimeValidator {
     public Parsing parsing;
-    private Bank bank;
 
-    public PassTimeValidator(Bank bank) {
-        this.bank = bank;
+    public PassTimeValidator() {
         parsing = new Parsing();
     }
 
     public boolean validatePassTime(String command) {
         boolean result = false;
-        if (parsing.checkCommandLength(command, 2)) {
-            if (checkNumberOfMonthsInteger(command)) {
-                if (checkNumberOfMonthsInRange(command)) {
-                    result = true;
-                }
-            }
-
+        if (parsing.checkCommandLength(command, 2) && checkNumberOfMonths(command)) {
+            result = true;
         }
         return result;
     }
 
-    private boolean checkNumberOfMonthsInRange(String command) {
-        Integer months = Integer.parseInt(parsing.getSecondWord(command));
+    private boolean checkNumberOfMonths(String command) {
+        boolean result = false;
+        try {
+            Integer months = Integer.parseInt(parsing.getSecondWord(command));
+            if (checkNumberOfMonthsInRange(months)) {
+                result = true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return result;
+    }
+
+    private boolean checkNumberOfMonthsInRange(Integer months) {
         if (months >= 1 && months <= 60) {
             return true;
         } else {
             return false;
         }
-    }
-
-    private boolean checkNumberOfMonthsInteger(String command) {
-        boolean result;
-        try {
-            String str = parsing.getSecondWord(command);
-            Integer.parseInt(str);
-            result = true;
-
-        } catch (Exception e) {
-            result = false;
-        }
-        return result;
     }
 
 

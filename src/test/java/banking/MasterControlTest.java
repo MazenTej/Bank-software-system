@@ -23,6 +23,8 @@ public class MasterControlTest {
     WithdrawProcessor withdrawProcessor;
     TransferProcessor transferProcessor;
     PassTimeProcessor passTimeProcessor;
+    CommandStorage commandStorage;
+    Output output;
 
 
     @BeforeEach
@@ -35,7 +37,7 @@ public class MasterControlTest {
         depositValidator = new DepositValidator(bank);
         withdrawValidator = new WithdrawValidator(bank);
         transferValidator = new TransferValidator(bank);
-        passTimeValidator = new PassTimeValidator(bank);
+        passTimeValidator = new PassTimeValidator();
 
 
         createProcessor = new CreateProcessor(bank);
@@ -44,8 +46,11 @@ public class MasterControlTest {
         transferProcessor = new TransferProcessor(bank);
         passTimeProcessor = new PassTimeProcessor(bank);
 
+        commandStorage = new CommandStorage(bank);
+        output = new Output(bank, commandStorage);
 
-        masterControl = new MasterControl(bank, new CommandValidator(createValidator, depositValidator, withdrawValidator, transferValidator, passTimeValidator), new CommandProcessor(createProcessor, depositProcessor, withdrawProcessor, transferProcessor, passTimeProcessor), new CommandStorage(bank));
+
+        masterControl = new MasterControl(bank, new CommandValidator(createValidator, depositValidator, withdrawValidator, transferValidator, passTimeValidator), new CommandProcessor(createProcessor, depositProcessor, withdrawProcessor, transferProcessor, passTimeProcessor), commandStorage, output);
 
     }
 

@@ -14,7 +14,7 @@ public class PassTimeValidatorTest {
     @BeforeEach
     void setUp() {
         bank = new Bank();
-        passTimeValidator = new PassTimeValidator(bank);
+        passTimeValidator = new PassTimeValidator();
     }
 
     @Test
@@ -59,6 +59,12 @@ public class PassTimeValidatorTest {
     void number_of_months_in_range_is_valid() {
         boolean actual = passTimeValidator.validatePassTime("pass 50");
         assertTrue(actual);
+    }
+
+    @Test
+    void number_of_months_more_than_maximum_invalid() {
+        boolean actual = passTimeValidator.validatePassTime("pass 65");
+        assertFalse(actual);
     }
 
 }

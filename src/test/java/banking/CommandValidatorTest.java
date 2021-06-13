@@ -23,7 +23,7 @@ public class CommandValidatorTest {
         depositValidator = new DepositValidator(bank);
         withdrawValidator = new WithdrawValidator(bank);
         transferValidator = new TransferValidator(bank);
-        passTimeValidator = new PassTimeValidator(bank);
+        passTimeValidator = new PassTimeValidator();
         commandValidator = new CommandValidator(createValidator, depositValidator, withdrawValidator, transferValidator, passTimeValidator);
     }
 

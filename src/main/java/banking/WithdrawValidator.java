@@ -13,17 +13,28 @@ public class WithdrawValidator {
 
     public boolean validateWithdraw(String command) {
         boolean result = false;
-        if (parsing.checkCommandLength(command, 3)) {
-            if (bank.accountExistsWithId(getWithdrawId(command))) {
-                if (parsing.checkStringDouble(getWithdrawAmount(command))) {
-                    if (checkValidWithdraw(command)) {
-                        result = true;
-                    }
-                }
+        if (parsing.checkCommandLength(command, 3) && isIdValid(command)) {
+            if (parsing.checkStringDouble(getWithdrawAmount(command)) && checkValidWithdraw(command)) {
+                result = true;
 
+            }
+
+
+        }
+        return result;
+    }
+
+    private boolean isIdValid(String command) {
+        boolean result = false;
+        if (parsing.checkIdLength(getWithdrawId(command))) {
+            if (parsing.checkIdHasOnlyNumbers(getWithdrawId(command))) {
+                if (bank.accountExistsWithId(getWithdrawId(command))) {
+                    result = true;
+                }
             }
         }
         return result;
+
     }
 
     public boolean checkValidWithdraw(String command) {

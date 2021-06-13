@@ -18,13 +18,25 @@ public class CreateValidator {
         } else if (getAccountType(command).equalsIgnoreCase("cd")) {
             if (parsing.checkCommandLength(command, 5)) {
                 if (validateCommand(command)) {
-                    if (parsing.checkStringDouble(getCdAmount(command))) {
-                        if (checkCdAmountInRange(command)) {
-                            result = true;
-                        }
+                    if (checkCdAmount(command)) {
+                        result = true;
                     }
                 }
             }
+        }
+        return result;
+
+
+    }
+
+    private boolean checkCdAmount(String command) {
+        boolean result = false;
+        try {
+            if (checkCdAmountInRange(command)) {
+                result = true;
+            }
+        } catch (Exception e) {
+            return false;
         }
         return result;
 
@@ -33,26 +45,43 @@ public class CreateValidator {
 
     public boolean validateCommand(String command) {
         boolean result = false;
-        if (parsing.checkIdLength(getId(command))) {
-            if (parsing.checkIdHasOnlyNumbers(getId(command))) {
-                if (bank.accountExistsWithId(getId(command))) {
-                    return false;
-                } else {
-                    if (parsing.checkStringDouble(getApr(command))) {
-                        if (parsing.checkAprRange(getApr(command))) {
-                            result = true;
-                        }
-                    }
+        if (checkId(command)) {
+            if (bank.accountExistsWithId(getId(command))) {
+                return false;
+            } else {
+                if (checkApr(getApr(command))) {
+                    result = true;
                 }
             }
         }
         return result;
     }
 
+    public boolean checkId(String command) {
+        boolean result = false;
+        if (parsing.checkIdLength(getId(command))) {
+            if (parsing.checkIdHasOnlyNumbers(getId(command))) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    public boolean checkApr(String apr) {
+        boolean result = false;
+        try {
+            if (parsing.checkAprRange(apr)) {
+                result = true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return result;
+
+    }
 
     public boolean checkCdAmountInRange(String command) {
-        String str = parsing.getFifthWord(command);
-        double apr = Double.parseDouble(str);
+        double apr = Double.parseDouble(getCdAmount(command));
         if (apr < 1000 || apr > 10000) {
             return false;
         } else {

@@ -6,7 +6,6 @@ import java.util.Map;
 
 public class Bank {
     private Map<String, Account> accounts;
-    private CommandStorage commandStorage;
 
     public Bank() {
         accounts = new LinkedHashMap<>();
