@@ -261,5 +261,34 @@ public class TransferValidatorTest {
         assertTrue(actual);
     }
 
+    @Test
+    void transfer_amount_to_cd_is_invalid() {
+        bank.addSavingsAccount(ID1, 0.6);
+        Account account1 = bank.retrieveAccount(ID1);
+        account1.setAmount(2000);
+        bank.addCdAccount(ID2, 0.6, 1000);
+        boolean actual = transferValidator.validateTransfer("transfer 12345678 10101010 1000");
+        assertFalse(actual);
+    }
+
+    @Test
+    void transfer_amount_from_cd_is_invalid() {
+        bank.addSavingsAccount(ID1, 0.6);
+        Account account1 = bank.retrieveAccount(ID1);
+        account1.setAmount(2000);
+        bank.addCdAccount(ID2, 0.6, 1000);
+        boolean actual = transferValidator.validateTransfer("transfer 10101010 12345678 1000");
+        assertFalse(actual);
+
+    }
+
+    @Test
+    void transfer_to_the_same_Account_is_invalid() {
+        bank.addSavingsAccount(ID1, 0.6);
+        Account account = bank.retrieveAccount(ID1);
+        account.setAmount(2000);
+        boolean actual = transferValidator.validateTransfer("transfer 12345678 12345678 1000");
+        assertFalse(actual);
+    }
 
 }

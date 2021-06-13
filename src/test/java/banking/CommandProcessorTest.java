@@ -110,6 +110,21 @@ public class CommandProcessorTest {
 
     }
 
+    @Test
+    void withdraw_from_account_is_successful() {
+        commandProcessor.process("create savings 12345678 1.0");
+        commandProcessor.process("deposit 12345678 100");
+        commandProcessor.process("deposit 12345678 200");
+        commandProcessor.process("withdraw 12345678 100");
+
+        Account actual = bank.getAccounts().get("12345678");
+        assertTrue(bank.getAccounts().containsKey("12345678"));
+        assertEquals(actual.getId(), "12345678");
+        assertEquals(actual.getApr(), 1.0);
+        assertEquals(actual.getAmount(), 200);
+        assertTrue(actual instanceof Savings);
+    }
+
 
 }
 

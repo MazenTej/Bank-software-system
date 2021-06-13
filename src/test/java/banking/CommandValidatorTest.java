@@ -176,23 +176,5 @@ public class CommandValidatorTest {
         assertFalse(actual);
     }
 
-    @Test
-    void test() {
-        bank.addCheckingAccount("12345678", 0.6);
-        boolean actual = commandValidator.validate("deposit 12345678 10.0f");
-        assertTrue(actual);
-    }
-
-    @Test
-    void tests() {
-        bank.addSavingsAccount("12345678", 0);
-        Account account = bank.retrieveAccount("12345678");
-        account.setAmount(1000);
-        bank.addCdAccount("10101010", 0, 1000);
-        bank.passTime(12);
-        boolean actual = commandValidator.validate("transfer 10101010 12345678 1000");
-        assertFalse(actual);
-    }
-
 
 }

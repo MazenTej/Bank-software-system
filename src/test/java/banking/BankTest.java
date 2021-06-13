@@ -38,6 +38,7 @@ public class BankTest {
     Checking checking;
     Savings savings;
 
+
     @Test
 
     @BeforeEach
@@ -887,6 +888,16 @@ public class BankTest {
         actual1.setAmount(50);
         bank.passTime(4);
         assertTrue(bank.getAccounts().isEmpty());
+    }
+
+    @Test
+    void pass_time_does_not_deduct_fee_at_a_hundred() {
+        bank.addCheckingAccount(ID, 0);
+        Account actual1 = bank.retrieveAccount(ID);
+        actual1.setAmount(100);
+        bank.passTime(1);
+        assertEquals(actual1.getAmount(), 100);
+
     }
 
     @Test

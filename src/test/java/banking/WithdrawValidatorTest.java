@@ -231,6 +231,7 @@ public class WithdrawValidatorTest {
     @Test
     void withdraw_from_cd_account_before_twelve_months_is_invalid() {
         bank.addCdAccount("12345678", 0.6, 5000);
+        bank.passTime(5);
         boolean actual = withdrawValidator.validateWithdraw("withdraw 12345678 200");
         assertFalse(actual);
     }

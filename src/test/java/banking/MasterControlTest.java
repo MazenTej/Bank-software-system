@@ -131,4 +131,22 @@ public class MasterControlTest {
     }
 
 
+    @Test
+    void test_savings() {
+        input.add("create savings 12345678 0");
+        input.add("deposit 12345678 700");
+        input.add("withdraw 12345678 500");
+        input.add("withdraw 12345678 200");
+        input.add("pass 1");
+        input.add("withdraw 12345678 100");
+        List<String> actual = masterControl.start(input);
+        assertEquals(actual.size(), 5);
+
+        assertEquals("Savings 12345678 100.00 0.00", actual.get(0));
+        assertEquals("deposit 12345678 700", actual.get(1));
+        assertEquals("withdraw 12345678 500", actual.get(2));
+        assertEquals("withdraw 12345678 100", actual.get(3));
+        assertEquals("withdraw 12345678 200", actual.get(4));
+    }
+
 }

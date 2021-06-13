@@ -59,8 +59,8 @@ public class WithdrawProcessorTest {
         bank.addCheckingAccount(ID1, 1.0);
         Account account = bank.retrieveAccount(ID1);
         account.setAmount(1000);
-        withdrawProcessor.withdrawAmount("withdraw 12345678 100");
-        assertEquals(account.getAmount(), 900);
+        withdrawProcessor.withdrawAmount("withdraw 12345678 400");
+        assertEquals(account.getAmount(), 600);
     }
 
     @Test

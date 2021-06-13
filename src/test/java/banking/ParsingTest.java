@@ -16,7 +16,7 @@ public class ParsingTest {
 
     @Test
     void get_first_word_in_command_with_no_extra_spaces() {
-        String actual1 = parsing.getFirstWord("create checking 12345678 0.6");
+        String actual1 = parsing.getFirstWord("create");
         String actual2 = parsing.getFirstWord("deposit 12345678 1000");
         String actual3 = parsing.getFirstWord("withdraw 12345678 300");
         String actual4 = parsing.getFirstWord("transfer 12345678 10101010 300");

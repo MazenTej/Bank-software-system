@@ -67,4 +67,10 @@ public class PassTimeValidatorTest {
         assertFalse(actual);
     }
 
+    @Test
+    void number_of_months_not_integer_is_invalid() {
+        boolean actual = passTimeValidator.validatePassTime("pass 4ll");
+        assertFalse(actual);
+    }
+
 }
