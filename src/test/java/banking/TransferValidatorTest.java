@@ -13,6 +13,7 @@ public class TransferValidatorTest {
     String ID1 = "12345678";
     String ID2 = "10101010";
 
+
     @BeforeEach
     void setUp() {
         bank = new Bank();
@@ -279,7 +280,6 @@ public class TransferValidatorTest {
         bank.addCdAccount(ID2, 0.6, 1000);
         boolean actual = transferValidator.validateTransfer("transfer 10101010 12345678 1000");
         assertFalse(actual);
-
     }
 
     @Test

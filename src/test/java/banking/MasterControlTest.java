@@ -101,7 +101,7 @@ public class MasterControlTest {
     }
 
     @Test
-    void test() {
+    void test_output_size() {
         input.add("create savings 12345678 0.6");
         input.add("pass 1");
         input.add("create checking 10101010 0.6");
