@@ -109,7 +109,6 @@ public class AccountTest {
 
     @Test
     void deposit_dollars_amounts_twice_into_empty_checking_account() {
-        checking.setAmount(AMOUNT);
         checking.deposit(DOLLARS_AMOUNT_DEPOSITED_1);
         checking.deposit(DOLLARS_AMOUNT_DEPOSITED_2);
         assertEquals(DOLLARS_AMOUNT_DEPOSITED_1 + DOLLARS_AMOUNT_DEPOSITED_2, checking.getAmount());

@@ -17,8 +17,6 @@ public class CreateValidator {
             result = true;
         }
         return result;
-
-
     }
 
     private boolean checkCdAmount(String command) {
