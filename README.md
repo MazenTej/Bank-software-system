@@ -29,4 +29,5 @@ The system was developed using **Test-Driven Development (TDD)** to ensure that 
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/username/bank-system-app.git
+   git clone https://github.com/MazenTej/Bank-software-system.git
+   run main.java
